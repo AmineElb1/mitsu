@@ -1,6 +1,7 @@
 .clients {
   padding-bottom: 0;
   background: var(--color-bg);
+  overflow-x: clip;
 }
 .clients__title {
   font-size: var(--text-h3);
@@ -12,6 +13,7 @@
 .clients__band {
   position: relative;
   display: grid;
+  grid-template-columns: minmax(0, 1fr); /* de brede logo-rij mag de pagina nooit oprekken */
   align-items: start;
   min-height: 44svh;
   margin-top: var(--space-6);
@@ -25,6 +27,7 @@
   );
 }
 .clients__loop {
+  min-width: 0;
   position: relative;
   z-index: var(--z-raised);
 }

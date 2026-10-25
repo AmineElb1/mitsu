@@ -169,6 +169,22 @@
 @media (max-width: 899px) {
   .hero {
     --figure-h: clamp(12rem, 34svh, 22rem);
+    /* diepere lucht onder de wordmark, zodat alle tekst eronder AA-contrast haalt */
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--ref-blue-600) 90%, var(--ref-blue-300)) 0%,
+      var(--ref-blue-600) 36%,
+      color-mix(in srgb, var(--ref-blue-600) 60%, var(--ref-blue-900)) 52%,
+      var(--ref-blue-900) 66%,
+      var(--ref-blue-900) 86%,
+      var(--color-page) 100%
+    );
+  }
+  .hero__veil {
+    background: none;
+  }
+  .hero__lead {
+    color: var(--ref-white);
   }
   .hero__people {
     bottom: 47%;
