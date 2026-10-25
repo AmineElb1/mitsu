@@ -1,0 +1,29 @@
+/* De lichtfiguur: wit, zacht uitgelopen, met een gloed in lichtblauw en wit. */
+.figure {
+  display: block;
+  height: 100%;
+  width: auto;
+  overflow: visible;
+  filter: blur(0.14rem)
+    drop-shadow(0 0 1.1rem color-mix(in srgb, var(--ref-white) 90%, transparent))
+    drop-shadow(0 0 3.5rem color-mix(in srgb, var(--ref-blue-300) 90%, transparent));
+  transition: filter var(--motion-slow) var(--ease), transform var(--motion-slow) var(--ease);
+}
+.figure__stop--solid {
+  stop-color: var(--ref-white);
+  stop-opacity: 1;
+}
+.figure__stop--clear {
+  stop-color: var(--ref-white);
+  stop-opacity: 0;
+}
+
+/* vrijgestelde foto → lichtfiguur */
+.figure--cutout {
+  object-fit: contain;
+  filter: brightness(0) invert(1) blur(0.18rem)
+    drop-shadow(0 0 1.1rem color-mix(in srgb, var(--ref-white) 90%, transparent))
+    drop-shadow(0 0 3.5rem color-mix(in srgb, var(--ref-blue-300) 90%, transparent));
+  -webkit-mask-image: linear-gradient(to bottom, var(--ref-black) 62%, transparent);
+  mask-image: linear-gradient(to bottom, var(--ref-black) 62%, transparent);
+}

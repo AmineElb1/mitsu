@@ -1,0 +1,49 @@
+.spotlight {
+  --spot-x: 50%;
+  --spot-y: 30%;
+  --spot-color: var(--ref-blue-300);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.spotlight--white {
+  --spot-color: var(--ref-white);
+}
+.spotlight--deep {
+  --spot-color: var(--ref-blue-600);
+}
+
+.spotlight__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle at var(--spot-x) var(--spot-y),
+    color-mix(in srgb, var(--spot-color) var(--glow-strength, 62%), transparent),
+    color-mix(in srgb, var(--spot-color) 18%, transparent) 32%,
+    transparent 62%
+  );
+  transition: opacity var(--motion-base) var(--ease);
+}
+
+.spotlight--under > .spotlight__glow {
+  z-index: -1;
+  --glow-strength: 34%;
+}
+.spotlight--over > .spotlight__glow {
+  z-index: var(--z-raised);
+  mix-blend-mode: screen;
+  --glow-strength: 62%;
+}
+
+.spotlight:hover > .spotlight__glow,
+.spotlight:focus-within > .spotlight__glow {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .spotlight__glow {
+    opacity: 0.55;
+  }
+}

@@ -1,0 +1,79 @@
+.manifest {
+  overflow: clip;
+  padding-bottom: 0;
+}
+
+.manifest__grid {
+  display: grid;
+  gap: var(--space-7);
+  margin-top: var(--space-7);
+}
+.manifest__title {
+  font-size: var(--text-h2);
+}
+.manifest__ghost {
+  color: var(--color-text-dim);
+}
+.manifest__copy {
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+  max-width: 34rem;
+}
+.manifest__intro {
+  font-size: var(--text-l);
+  line-height: 1.45;
+}
+.manifest__highlight {
+  font-size: var(--text-l);
+  font-weight: var(--weight-ui-strong);
+  line-height: 1.7;
+}
+.manifest__body {
+  color: var(--color-text-muted);
+}
+
+.manifest__strip {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+  padding-inline: var(--gutter);
+  padding-bottom: calc(var(--space-section) * 0.6);
+}
+.manifest__shot {
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  will-change: transform;
+}
+.manifest__shot .photo {
+  border-radius: var(--radius-l);
+}
+/* onderkant van de strook vervaagt in de volgende (donkere) sectie */
+.manifest__strip::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 45%;
+  background: linear-gradient(to bottom, transparent, var(--color-page));
+  pointer-events: none;
+}
+
+@media (min-width: 900px) {
+  .manifest__grid {
+    grid-template-columns: 1.55fr 1fr;
+    align-items: end;
+    gap: var(--space-8);
+  }
+  .manifest__strip {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-5);
+  }
+  .manifest__shot--2 {
+    margin-top: var(--space-8);
+  }
+  .manifest__shot--4 {
+    margin-top: var(--space-7);
+  }
+}

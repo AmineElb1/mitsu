@@ -1,0 +1,75 @@
+.makers {
+  overflow: clip;
+  background:
+    radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--ref-blue-600) 70%, transparent), transparent 62%),
+    var(--color-bg);
+}
+
+.makers__head {
+  display: grid;
+  gap: var(--space-6);
+  align-items: end;
+}
+.makers__titles {
+  display: grid;
+  gap: var(--space-5);
+}
+.makers__title {
+  font-size: var(--text-h1);
+}
+.makers__aside {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+  max-width: 24rem;
+}
+.makers__intro {
+  color: var(--color-text-muted);
+}
+
+.makers__grid {
+  display: grid;
+  gap: var(--space-6) var(--space-5);
+  margin-top: var(--space-8);
+}
+
+.maker {
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+}
+.maker__photo {
+  border-radius: var(--radius-l);
+  border: var(--line-width) solid var(--color-line);
+}
+.maker__num {
+  margin-top: var(--space-4);
+  color: var(--color-text-muted);
+}
+.maker__num i {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--weight-display);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 1.15em;
+}
+.maker__name {
+  font-size: var(--text-h2);
+  line-height: var(--leading-tight);
+}
+.maker__line {
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 900px) {
+  .makers__head {
+    grid-template-columns: 1.4fr 1fr;
+  }
+  .makers__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .maker:nth-child(2) {
+    margin-top: var(--space-8);
+  }
+}

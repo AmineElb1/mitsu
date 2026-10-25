@@ -1,0 +1,5 @@
+/* Maskerlaag van SplitText: ruimte voor staarten en accenten zodat niets wordt afgeknipt */
+.split-line-mask {
+  padding-block: 0.16em;
+  margin-block: -0.16em;
+}

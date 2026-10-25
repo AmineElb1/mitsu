@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="nl" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mitsu · 三つ · 光 — Drie punten, één licht</title>
+    <meta
+      name="description"
+      content="Mitsu is een voorbeeldsite voor een merk- en webbureau: drie punten, één licht. Identiteit, websites en beeld die helder zijn en blijven."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <script>
+      // Thema vóór de eerste paint zetten, zodat er geen flits ontstaat.
+      (function () {
+        try {
+          var saved = localStorage.getItem('mitsu-theme');
+          var theme = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

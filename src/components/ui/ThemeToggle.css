@@ -1,0 +1,32 @@
+.theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: calc(var(--button-height) - var(--space-3));
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+}
+.theme-toggle__track {
+  position: relative;
+  width: var(--space-6);
+  height: var(--space-6);
+  border-radius: var(--radius-pill);
+  border: var(--line-width) solid var(--color-text);
+  overflow: hidden;
+}
+/* maan/zon: gevuld vlak dat meeschuift */
+.theme-toggle__thumb {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-text);
+  clip-path: inset(0 50% 0 0);
+  transition: clip-path var(--motion-base) var(--ease);
+}
+.theme-toggle[aria-checked='true'] .theme-toggle__thumb {
+  clip-path: inset(0 0 0 50%);
+}
+.theme-toggle:hover .theme-toggle__track {
+  border-color: var(--color-accent);
+}

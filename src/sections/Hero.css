@@ -1,0 +1,179 @@
+.hero {
+  --figure-h: clamp(16rem, 58svh, 44rem);
+  position: relative;
+  display: flex;
+  min-height: max(100svh, 56vw);
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--color-text);
+  /* de lucht: diepblauw bovenaan, lichter in het midden, dan over in de pagina */
+  background:
+    radial-gradient(ellipse at 50% 58%, color-mix(in srgb, var(--ref-white) 26%, transparent), transparent 56%),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--ref-blue-600) 90%, var(--ref-blue-300)) 0%,
+      color-mix(in srgb, var(--ref-blue-600) 66%, var(--ref-blue-300)) 48%,
+      color-mix(in srgb, var(--ref-blue-600) 62%, var(--ref-blue-300)) 66%,
+      color-mix(in srgb, var(--ref-blue-900) 70%, var(--ref-blue-600)) 86%,
+      var(--color-page) 100%
+    );
+}
+
+.hero__sky,
+.hero__aurora,
+.hero__veil {
+  position: absolute;
+  inset: 0;
+}
+.hero__sky {
+  inset: -4% 0 0;
+  z-index: -3;
+}
+.hero__photo {
+  position: absolute;
+  inset: 0;
+}
+.hero__aurora {
+  z-index: -2;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  opacity: 0.3;
+}
+/* alleen de onderkant: tekst blijft leesbaar en de hero loopt over in de pagina */
+.hero__veil {
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 62%,
+    color-mix(in srgb, var(--ref-blue-900) 52%, transparent) 84%,
+    var(--color-page) 100%
+  );
+}
+
+.hero__inner {
+  position: relative;
+  z-index: var(--z-raised);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding-top: calc(var(--header-height) + var(--space-7));
+  padding-bottom: calc(var(--space-8) + var(--space-6));
+  pointer-events: none;
+}
+.hero__inner > * {
+  pointer-events: auto;
+}
+
+.hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--ref-white);
+}
+.hero__eyebrow .jp {
+  font-size: var(--text-l);
+  letter-spacing: 0.08em;
+  color: var(--color-text);
+}
+.hero__title {
+  margin-block: auto;
+  pointer-events: none;
+}
+.hero__word {
+  display: block;
+  font-size: var(--text-mega);
+  font-weight: var(--weight-display);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  text-transform: lowercase;
+  text-align: center;
+  color: var(--ref-white);
+  white-space: nowrap;
+}
+.hero__word-char {
+  display: inline-block;
+}
+
+/* drie mensen, wazig, ónder de letters: de titel ligt erover */
+.hero__people {
+  position: absolute;
+  inset-inline: 0;
+  margin-inline: auto;
+  width: max-content;
+  bottom: 23%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+}
+.hero__person {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  margin-inline: calc(var(--figure-h) * -0.03);
+}
+.hero__person .figure {
+  position: relative;
+  height: var(--figure-h);
+  opacity: 0.82;
+  filter: blur(var(--blur-reveal));
+}
+.hero__person--1 .figure {
+  height: calc(var(--figure-h) * 0.95);
+}
+.hero__person--3 .figure {
+  height: calc(var(--figure-h) * 0.9);
+}
+.hero__foot {
+  display: grid;
+  gap: var(--space-5);
+  align-items: end;
+}
+.hero__lead {
+  max-width: 20rem;
+  font-size: var(--text-s);
+  line-height: 1.5;
+  color: var(--color-on-ink-muted);
+}
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.hero__tagline {
+  font-size: var(--text-h3);
+  max-width: 9em;
+}
+.hero__tagline em {
+  color: var(--ref-blue-300);
+}
+
+@media (min-width: 900px) {
+  .hero__foot {
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--space-6);
+  }
+  .hero__cta {
+    justify-content: center;
+    align-self: end;
+  }
+  .hero__tagline {
+    justify-self: end;
+    text-align: right;
+  }
+}
+
+@media (max-width: 899px) {
+  .hero {
+    --figure-h: clamp(12rem, 34svh, 22rem);
+  }
+  .hero__people {
+    bottom: 47%;
+  }
+  .hero__title {
+    margin-block: 0;
+  }
+}

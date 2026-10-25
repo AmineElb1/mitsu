@@ -1,0 +1,56 @@
+.clients {
+  padding-bottom: 0;
+  background: var(--color-bg);
+}
+.clients__title {
+  font-size: var(--text-h3);
+  text-align: center;
+  margin-inline: auto;
+}
+
+/* lucht: wit → lichtblauw → diepblauw, zodat de rij vloeiend in het contactvlak overloopt */
+.clients__band {
+  position: relative;
+  display: grid;
+  align-items: start;
+  min-height: 44svh;
+  margin-top: var(--space-6);
+  padding-top: var(--space-7);
+  background: linear-gradient(
+    to bottom,
+    var(--color-bg) 0%,
+    var(--ref-blue-100) 34%,
+    color-mix(in srgb, var(--ref-blue-300) 70%, var(--ref-white)) 62%,
+    var(--ref-blue-900) 100%
+  );
+}
+.clients__loop {
+  position: relative;
+  z-index: var(--z-raised);
+}
+
+.loop__list {
+  gap: var(--space-8);
+  padding-right: var(--space-8);
+}
+
+.client {
+  width: auto;
+  object-fit: contain;
+  opacity: 0.88;
+  transition: opacity var(--motion-base) var(--ease), transform var(--motion-slow) var(--ease);
+}
+.client:hover {
+  opacity: 1;
+  transform: scale(1.06);
+}
+.client--mark {
+  height: clamp(4.5rem, 8vw, 7rem);
+}
+.client--wide {
+  height: auto;
+  width: clamp(9rem, 15vw, 14rem);
+}
+.client.is-inverted {
+  filter: brightness(0);
+}

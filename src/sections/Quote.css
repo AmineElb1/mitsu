@@ -1,0 +1,69 @@
+.quote {
+  overflow: clip;
+  background: var(--color-bg);
+}
+.quote__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.quote__glow {
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: var(--radius-pill);
+}
+.quote__glow--soft {
+  left: -20%;
+  top: 10%;
+  width: 80vw;
+  background: var(--glow-soft);
+}
+.quote__glow--white {
+  right: -15%;
+  bottom: -20%;
+  width: 70vw;
+  background: var(--glow-white);
+}
+
+.quote__inner {
+  position: relative;
+  z-index: var(--z-raised);
+  display: grid;
+  gap: var(--space-8);
+}
+.quote__text {
+  font-size: var(--text-h2);
+  line-height: 1.08;
+  max-width: 16em;
+  text-wrap: balance;
+}
+.quote__text em {
+  color: var(--color-emphasis);
+}
+.quote__by {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+.quote__dots {
+  display: inline-flex;
+}
+.quote__dots i {
+  width: var(--space-5);
+  aspect-ratio: 1;
+  border-radius: var(--radius-pill);
+}
+.quote__dots i:nth-child(1) {
+  background: var(--point-3);
+}
+.quote__dots i:nth-child(2) {
+  margin-left: calc(var(--space-2) * -1);
+  background: var(--point-2);
+}
+.quote__dots i:nth-child(3) {
+  margin-left: calc(var(--space-2) * -1);
+  background: var(--point-1);
+  box-shadow: 0 0 0 var(--line-width) var(--color-accent-text) inset;
+}

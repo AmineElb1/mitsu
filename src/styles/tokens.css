@@ -1,0 +1,299 @@
+/* ==========================================================================
+   MITSU — design tokens in drie lagen
+   1. REFERENCE  ruwe waarden (de enige plek met hex)
+   2. SEMANTIC   betekenis per thema (licht / donker / inkt- en blauw-vlak)
+   3. COMPONENT  maten en vormen per component, opgebouwd uit laag 1 en 2
+
+   Palet: zwart, wit en één kleur — lichtblauw. De vier blauwtinten hieronder
+   zijn dezelfde tint (hue 207) in verschillende helderheid: ze zijn nodig voor
+   contrast (tekst) en diepte (lucht, footer), er komt geen tweede kleur bij.
+
+   Componenten gebruiken uitsluitend laag 2 en 3. Media queries kunnen geen
+   var() lezen: de breakpoints 600 / 900 / 1200 staan daarom als literal in
+   de CSS en gespiegeld in --bp-* voor gebruik in JavaScript.
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------
+   1. REFERENCE
+   ------------------------------------------------------------------------- */
+:root {
+  /* zwart en wit */
+  --ref-black: #07090d;
+  --ref-white: #ffffff;
+
+  /* de ene kleur: lichtblauw, in vier tinten */
+  --ref-blue-100: #eaf4fd; /* bijna wit, voor vlakken */
+  --ref-blue-300: #8ec5f0; /* het lichtblauw */
+  --ref-blue-600: #2f78b8; /* tekst/lijnen op wit (4,7:1), lucht-top */
+  --ref-blue-900: #0c3358; /* diepblauw, voor footer en glas */
+
+  /* spacing 4 · 8 · 12 · 16 · 24 · 32 · 48 · 72 (in rem, zodat het meeschaalt) */
+  --ref-space-4: 0.25rem;
+  --ref-space-8: 0.5rem;
+  --ref-space-12: 0.75rem;
+  --ref-space-16: 1rem;
+  --ref-space-24: 1.5rem;
+  --ref-space-32: 2rem;
+  --ref-space-48: 3rem;
+  --ref-space-72: 4.5rem;
+
+  /* radius 8 · 14 · 20 · 999 */
+  --ref-radius-8: 0.5rem;
+  --ref-radius-14: 0.875rem;
+  --ref-radius-20: 1.25rem;
+  --ref-radius-999: 999px;
+
+  /* beweging */
+  --ref-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ref-motion-150: 150ms;
+  --ref-motion-300: 300ms;
+  --ref-motion-700: 700ms;
+
+  /* breakpoints (spiegel voor JS, zie opmerking bovenaan) */
+  --bp-s: 600px;
+  --bp-m: 900px;
+  --bp-l: 1200px;
+
+  /* lettertypen */
+  --ref-font-display: 'Fraunces Variable', 'Fraunces', Georgia, serif;
+  --ref-font-ui: 'Inter Tight', system-ui, sans-serif;
+  --ref-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --ref-font-jp: 'Shippori Mincho', serif;
+}
+
+/* -------------------------------------------------------------------------
+   2. SEMANTIC — licht thema (standaard)
+   ------------------------------------------------------------------------- */
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --color-page: var(--ref-white); /* achtergrond van de pagina zelf; verandert niet binnen inkt-vlakken */
+  --color-bg: var(--ref-white);
+  --color-bg-raised: color-mix(in srgb, var(--ref-white) 50%, var(--ref-blue-100));
+  --color-bg-sunken: var(--ref-blue-100);
+  --color-text: var(--ref-black);
+  --color-text-muted: color-mix(in srgb, var(--ref-black) 68%, var(--ref-white));
+  --color-text-dim: color-mix(in srgb, var(--ref-black) 50%, var(--ref-white)); /* groot gedimd, ≥3:1 */
+  --color-text-ghost: color-mix(in srgb, var(--ref-black) 14%, var(--ref-white)); /* alleen decoratief */
+  --color-line: color-mix(in srgb, var(--ref-black) 14%, transparent);
+
+  --color-accent: var(--ref-blue-300); /* vulling: knoppen, markeerstift, cirkels */
+  --color-on-accent: var(--ref-black);
+  --color-accent-text: var(--ref-blue-600); /* tekst/lijnen in blauw op een licht vlak */
+  --color-emphasis: var(--color-text); /* het ene cursieve nadrukwoord */
+  --color-highlight: var(--ref-blue-300);
+  --color-on-highlight: var(--ref-black);
+
+  --color-focus: var(--ref-blue-300);
+  --color-focus-edge: var(--ref-black);
+
+  --color-on-ink: var(--ref-white);
+  --color-on-ink-muted: color-mix(in srgb, var(--ref-white) 76%, var(--ref-black));
+  --color-glass: color-mix(in srgb, var(--ref-white) 88%, transparent);
+
+  --shadow-lift: 0 var(--ref-space-24) var(--ref-space-48) calc(var(--ref-space-24) * -1)
+    color-mix(in srgb, var(--ref-blue-900) 34%, transparent);
+}
+
+:root[data-theme='dark'] {
+  --color-page: var(--ref-black);
+}
+
+/* -------------------------------------------------------------------------
+   2b. SEMANTIC — donker thema én inkt-vlakken (altijd donker, ook in licht thema)
+   ------------------------------------------------------------------------- */
+:root[data-theme='dark'],
+[data-surface='ink'] {
+  color-scheme: dark;
+
+  --color-bg: var(--ref-black);
+  --color-bg-raised: color-mix(in srgb, var(--ref-black) 90%, var(--ref-blue-300));
+  --color-bg-sunken: color-mix(in srgb, var(--ref-black) 94%, var(--ref-blue-300));
+  --color-text: var(--ref-white);
+  --color-text-muted: color-mix(in srgb, var(--ref-white) 74%, var(--ref-black));
+  --color-text-dim: color-mix(in srgb, var(--ref-white) 50%, var(--ref-black));
+  --color-text-ghost: color-mix(in srgb, var(--ref-white) 16%, var(--ref-black));
+  --color-line: color-mix(in srgb, var(--ref-white) 18%, transparent);
+
+  --color-accent-text: var(--ref-blue-300);
+  --color-emphasis: var(--ref-blue-300);
+
+  --color-focus-edge: var(--ref-white);
+  --color-glass: color-mix(in srgb, var(--ref-black) 66%, transparent);
+
+  --shadow-lift: 0 var(--ref-space-24) var(--ref-space-48) calc(var(--ref-space-24) * -1)
+    color-mix(in srgb, var(--ref-black) 80%, transparent);
+}
+
+/* Diepblauw vlak (footer, contact): zoals de blauwe afsluiting van de referentie */
+[data-surface='blue'] {
+  color-scheme: dark;
+
+  --color-bg: var(--ref-blue-900);
+  --color-bg-raised: color-mix(in srgb, var(--ref-blue-900) 82%, var(--ref-blue-300));
+  --color-bg-sunken: color-mix(in srgb, var(--ref-blue-900) 80%, var(--ref-black));
+  --color-text: var(--ref-white);
+  --color-text-muted: color-mix(in srgb, var(--ref-white) 78%, var(--ref-blue-900));
+  --color-text-dim: color-mix(in srgb, var(--ref-white) 56%, var(--ref-blue-900));
+  --color-text-ghost: color-mix(in srgb, var(--ref-white) 18%, var(--ref-blue-900));
+  --color-line: color-mix(in srgb, var(--ref-white) 24%, transparent);
+  --color-accent-text: var(--ref-blue-300);
+  --color-emphasis: var(--ref-blue-300);
+  --color-focus-edge: var(--ref-white);
+  --color-glass: color-mix(in srgb, var(--ref-blue-900) 62%, transparent);
+}
+
+/* Een licht vlak midden in het donkere thema (bv. citaat, panelen) */
+[data-surface='paper'] {
+  color-scheme: light;
+
+  --color-bg: var(--ref-white);
+  --color-bg-raised: color-mix(in srgb, var(--ref-white) 50%, var(--ref-blue-100));
+  --color-bg-sunken: var(--ref-blue-100);
+  --color-text: var(--ref-black);
+  --color-text-muted: color-mix(in srgb, var(--ref-black) 68%, var(--ref-white));
+  --color-text-dim: color-mix(in srgb, var(--ref-black) 50%, var(--ref-white));
+  --color-text-ghost: color-mix(in srgb, var(--ref-black) 14%, var(--ref-white));
+  --color-line: color-mix(in srgb, var(--ref-black) 14%, transparent);
+  --color-accent-text: var(--ref-blue-600);
+  --color-emphasis: var(--ref-black);
+  --color-focus-edge: var(--ref-black);
+  --color-glass: color-mix(in srgb, var(--ref-white) 88%, transparent);
+}
+
+/* -------------------------------------------------------------------------
+   2c. SEMANTIC — thema-onafhankelijk
+   ------------------------------------------------------------------------- */
+:root {
+  --font-display: var(--ref-font-display);
+  --font-ui: var(--ref-font-ui);
+  --font-mono: var(--ref-font-mono);
+  --font-jp: var(--ref-font-jp);
+
+  --weight-display: 300;
+  --weight-ui: 400;
+  --weight-ui-strong: 600;
+
+  /* typografische schaal (fluid, gemeten in rem + vw) */
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.8125rem;
+  --text-s: 0.9375rem;
+  --text-m: 1.0625rem;
+  --text-l: 1.25rem;
+  --text-xl: clamp(1.5rem, 1.1rem + 1.2vw, 2.25rem);
+  --text-h3: clamp(1.75rem, 1.2rem + 2vw, 3rem);
+  --text-h2: clamp(2.5rem, 1.4rem + 5vw, 6rem);
+  --text-h1: clamp(3.25rem, 1.5rem + 8vw, 9.5rem);
+  --text-jumbo: clamp(4rem, 1rem + 14vw, 14rem);
+  --text-mega: 46vw;
+  --text-mega-footer: 50vw;
+  --text-button: 1.0625rem;
+
+  --leading-tight: 0.92;
+  --leading-heading: 1.02;
+  --leading-body: 1.55;
+  --tracking-display: -0.025em;
+  --tracking-label: 0.14em;
+
+  /* spacing */
+  --space-1: var(--ref-space-4);
+  --space-2: var(--ref-space-8);
+  --space-3: var(--ref-space-12);
+  --space-4: var(--ref-space-16);
+  --space-5: var(--ref-space-24);
+  --space-6: var(--ref-space-32);
+  --space-7: var(--ref-space-48);
+  --space-8: var(--ref-space-72);
+  --space-section: clamp(var(--ref-space-72), 6vw + 3rem, calc(var(--ref-space-72) * 2.2));
+  --gutter: clamp(var(--ref-space-24), 4vw, var(--ref-space-72));
+
+  /* radius */
+  --radius-s: var(--ref-radius-8);
+  --radius-m: var(--ref-radius-14);
+  --radius-l: var(--ref-radius-20);
+  --radius-pill: var(--ref-radius-999);
+
+  /* beweging */
+  --ease: var(--ref-ease);
+  --motion-fast: var(--ref-motion-150);
+  --motion-base: var(--ref-motion-300);
+  --motion-slow: var(--ref-motion-700);
+
+  /* lijnen en ringen */
+  --line-width: 1px;
+  --focus-gap: 2px;
+  --focus-width: 4px;
+  --focus-edge: 1px;
+
+  /* beeld */
+  --blur-reveal: 1.25rem;
+  --overlay-blue: color-mix(in srgb, var(--ref-blue-300) 70%, transparent);
+  --overlay-pale: color-mix(in srgb, var(--ref-blue-100) 60%, transparent);
+  --veil-ink: color-mix(in srgb, var(--ref-black) 72%, transparent);
+
+  /* gloed: alleen blauw en wit */
+  --glow-strong: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--ref-blue-300) 80%, transparent),
+    color-mix(in srgb, var(--ref-blue-300) 26%, transparent) 55%,
+    transparent
+  );
+  --glow-soft: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--ref-blue-300) 52%, transparent),
+    color-mix(in srgb, var(--ref-blue-300) 14%, transparent) 60%,
+    transparent
+  );
+  --glow-white: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--ref-white) 86%, transparent),
+    color-mix(in srgb, var(--ref-white) 24%, transparent) 55%,
+    transparent
+  );
+
+  /* de drie punten: drie helderheden van dezelfde blauwtint */
+  --point-1: var(--ref-blue-100);
+  --point-2: var(--ref-blue-300);
+  --point-3: var(--ref-blue-600);
+
+  --z-base: 0;
+  --z-raised: 1;
+  --z-header: 50;
+  --z-menu: 60;
+}
+
+/* -------------------------------------------------------------------------
+   3. COMPONENT
+   ------------------------------------------------------------------------- */
+:root {
+  --container-max: 96rem;
+  --header-height: 4.25rem;
+
+  /* knop */
+  --button-height: 3.25rem;
+  --button-pad-x: var(--space-6);
+  --button-radius: var(--radius-pill);
+  --button-border: var(--line-width);
+
+  /* kaart */
+  --card-radius: var(--radius-l);
+  --card-pad: var(--space-6);
+
+  /* makers */
+  --maker-height: clamp(26rem, 52vw, 44rem);
+
+  /* ronde carrousel */
+  --orb-size: clamp(8.5rem, 15vw, 14rem);
+
+  /* formulier */
+  --field-height: 3.5rem;
+}
+
+/* kleine schermen: de wordmark vult de breedte */
+@media (max-width: 899px) {
+  :root {
+    --text-mega: 49vw;
+    --text-mega-footer: 47vw;
+  }
+}
