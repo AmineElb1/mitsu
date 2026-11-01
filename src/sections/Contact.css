@@ -7,21 +7,15 @@
   inset: 0;
   z-index: 0;
 }
-.contact__photo {
+.contact__water {
   position: absolute;
   inset: 0;
-}
-.contact__veil {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom, var(--ref-blue-900) 0%, transparent 28%),
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--ref-blue-900) 78%, transparent),
-      color-mix(in srgb, var(--ref-blue-900) 62%, transparent) 55%,
-      var(--ref-blue-900) 100%
-    );
+  background: linear-gradient(
+    to bottom,
+    var(--ref-blue-900) 0%,
+    color-mix(in srgb, var(--ref-blue-900) 78%, var(--ref-blue-600)) 55%,
+    color-mix(in srgb, var(--ref-blue-900) 88%, var(--ref-black)) 100%
+  );
 }
 
 .contact__grid {
@@ -113,55 +107,15 @@ textarea.field__control {
 }
 
 .topics {
-  display: grid;
-  gap: var(--space-3);
   min-width: 0;
   margin: 0;
   padding: 0;
   border: 0;
 }
-.topics__row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-.topic {
-  position: relative;
-  cursor: pointer;
-}
-.topic__input {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  margin: 0;
-  cursor: pointer;
-}
-.topic__pill {
-  display: inline-flex;
-  align-items: center;
-  min-height: calc(var(--button-height) - var(--space-3));
-  padding-inline: var(--space-5);
-  border: var(--line-width) solid var(--color-line);
-  border-radius: var(--radius-pill);
-  font-weight: var(--weight-ui-strong);
-  transition:
-    background-color var(--motion-base) var(--ease),
-    color var(--motion-base) var(--ease),
-    border-color var(--motion-base) var(--ease);
-}
-.topic:hover .topic__pill {
-  border-color: var(--color-text);
-}
-.topic__input:checked + .topic__pill {
-  background: var(--color-highlight);
-  color: var(--color-on-highlight);
-  border-color: var(--color-highlight);
-}
-.topic__input:focus-visible + .topic__pill {
-  box-shadow:
-    0 0 0 var(--focus-gap) var(--ref-blue-900),
-    0 0 0 calc(var(--focus-gap) + var(--focus-width)) var(--color-focus),
-    0 0 0 calc(var(--focus-gap) + var(--focus-width) + var(--focus-edge)) var(--color-focus-edge);
+/* meer ruimte tussen de vraag en de keuzes */
+.topics > legend {
+  padding: 0;
+  margin-bottom: var(--space-5);
 }
 
 .contact__submit {
@@ -198,3 +152,4 @@ textarea.field__control {
     gap: var(--space-8);
   }
 }
+

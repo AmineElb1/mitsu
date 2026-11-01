@@ -2,8 +2,8 @@ import { useRef, useState } from 'react';
 import { contact } from '../content/site.js';
 import SectionLabel from '../components/ui/SectionLabel.jsx';
 import Heading from '../components/ui/Heading.jsx';
-import Photo from '../components/ui/Photo.jsx';
 import Button from '../components/ui/Button.jsx';
+import TopicChoice from '../components/ui/TopicChoice.jsx';
 import { brand } from '../content/site.js';
 import { gsap, duration } from '../lib/motion.js';
 import { useMotion } from '../hooks/useMotion.js';
@@ -45,6 +45,9 @@ export default function Contact() {
     }
 
     if (!contact.endpoint) {
+      /* demo-modus: kort "verzenden" tonen zodat de knop zijn golf kan laten zien, er wordt niets verstuurd */
+      setStatus('sending');
+      await new Promise(r => setTimeout(r, 1600));
       setStatus('sent');
       form.current.reset();
       setTopic(contact.topics[0]);
@@ -93,14 +96,14 @@ export default function Contact() {
 
   return (
     <section ref={root} id="contact" className="contact section" data-surface="blue" aria-labelledby="contact-title">
+      {/* water: een rustig diepblauw vlak, waar de druppel uit de hero in valt */}
       <div className="contact__bg" aria-hidden="true">
-        <Photo name="mossrock" sizes="100vw" overlay="none" parallax credit={false} className="contact__photo" />
-        <div className="contact__veil" />
+        <div className="contact__water" />
       </div>
 
       <div className="container contact__grid">
         <div className="contact__intro">
-          <SectionLabel n={8} total={8}>
+          <SectionLabel n={5} total={5}>
             {contact.label}
           </SectionLabel>
           <Heading id="contact-title" className="contact__title" parts={contact.title} />
@@ -108,7 +111,6 @@ export default function Contact() {
           <p className="contact__mail label">
             <span>Liever mailen?</span>
             <a href={`mailto:${brand.email}`}>{brand.email}</a>
-            <span className="contact__demo">(voorbeeldadres)</span>
           </p>
         </div>
 
@@ -118,28 +120,20 @@ export default function Contact() {
 
           <fieldset className="topics">
             <legend className="field__label label">{f.topic}</legend>
-            <div className="topics__row">
-              {contact.topics.map(t => (
-                <label className="topic" key={t}>
-                  <input
-                    className="topic__input"
-                    type="radio"
-                    name="topic"
-                    value={t}
-                    checked={topic === t}
-                    onChange={() => setTopic(t)}
-                  />
-                  <span className="topic__pill">{t}</span>
-                </label>
-              ))}
-            </div>
+            <TopicChoice name="topic" options={contact.topics} value={topic} onChange={setTopic} />
           </fieldset>
 
           {field('message', f.message, { as: 'textarea', rows: 4, required: true })}
 
           <div className="contact__submit">
-            <Button variant="primary" type="submit" disabled={status === 'sending'} magnetic>
-              {status === 'sending' ? 'Even geduld…' : contact.submit}
+            <Button
+              variant="primary"
+              type="submit"
+              wave
+              state={status === 'sending' || status === 'sent' ? status : 'idle'}
+              aria-disabled={status === 'sending' || undefined}
+            >
+              {status === 'sending' ? 'Even geduld…' : status === 'sent' ? 'Verzonden' : contact.submit}
             </Button>
             <p className="contact__privacy label" id="contact-privacy">
               {contact.privacy}

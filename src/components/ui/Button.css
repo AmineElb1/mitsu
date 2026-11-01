@@ -1,11 +1,15 @@
+/* Knoppen zonder pill-vorm: een penseelstreek (hoofdknop) of een penseelstreep eronder (tweede knop). */
 .button {
+  position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: var(--button-height);
-  padding-inline: var(--button-pad-x);
-  border: var(--button-border) solid transparent;
-  border-radius: var(--button-radius);
+  padding: var(--space-3) calc(var(--button-pad-x) * 1.15);
+  border: 0;
+  border-radius: var(--radius-s); /* alleen voor de vorm van de focusring */
+  background: transparent;
   font-family: var(--font-ui);
   font-size: var(--text-button);
   font-weight: 600;
@@ -13,44 +17,109 @@
   line-height: 1;
   text-decoration: none;
   max-width: 100%;
-  padding-block: var(--space-3);
   text-align: center;
   cursor: pointer;
-  transition:
-    background-color var(--motion-base) var(--ease),
-    color var(--motion-base) var(--ease),
-    border-color var(--motion-base) var(--ease),
-    transform var(--motion-fast) var(--ease);
+  transition: transform var(--motion-fast) var(--ease);
 }
 .button:active {
   transform: scale(0.97);
 }
+.button__label {
+  position: relative;
+  z-index: 1;
+}
 
+/* ---------- penseelstreek ---------- */
+.button__brush {
+  position: absolute;
+  inset: -12% -4%;
+  z-index: 0;
+  width: 108%;
+  height: 124%;
+  overflow: visible;
+  transition: transform var(--motion-base) var(--ease);
+}
 .button--primary {
-  background: var(--color-accent);
   color: var(--color-on-accent);
 }
-.button--primary:hover {
-  background: color-mix(in srgb, var(--color-accent) 70%, var(--color-text));
+.button--primary .button__brush-fill {
+  fill: var(--color-accent);
 }
-
-.button--outline {
-  background: transparent;
-  color: var(--color-text);
-  border-color: var(--color-text);
-}
-.button--outline:hover {
-  background: var(--color-text);
-  color: var(--color-bg);
-}
-
 .button--solid {
-  background: var(--color-text);
   color: var(--color-bg);
 }
-.button--solid:hover {
-  background: var(--color-accent);
-  color: var(--color-on-accent);
+.button--solid .button__brush-fill {
+  fill: var(--color-text);
+}
+/* zonder licht: de streek zwelt een fractie aan */
+.button--brush:not(.has-sheen):not(.has-wave):hover .button__brush {
+  transform: scale(1.03, 1.06);
+}
+
+/* licht dat binnen de streek overglijdt (alleen bij `sheen`) */
+.button__sheen-stop {
+  stop-color: var(--ref-white);
+  stop-opacity: 0.75;
+}
+.button__sheen-stop--clear {
+  stop-opacity: 0;
+}
+.button__sheen {
+  transform: translateX(0);
+}
+.button.has-sheen:hover .button__sheen {
+  transform: translateX(300px);
+  /* gelijkmatige curve: met de merk-easing is het licht al voorbij voor je het ziet */
+  transition: transform calc(var(--motion-slow) * 1.2) ease-in-out;
+}
+
+/* water dat door de streek loopt (verzendknop) */
+.button__wave {
+  fill: color-mix(in srgb, var(--ref-blue-600) 70%, var(--color-accent));
+  transform: translateX(0);
+  transition: transform calc(var(--motion-slow) * 1.2) var(--ease);
+}
+.button.has-wave:hover .button__wave,
+.button.has-wave:focus-visible .button__wave {
+  transform: translateX(26px);
+}
+.button.has-wave.is-sending .button__wave {
+  transform: translateX(150px);
+  transition-duration: 2s;
+  transition-timing-function: ease-in-out;
+}
+/* verzonden: de golf is helemaal door, de knop is één kleur */
+.button.has-wave.is-sent .button__wave {
+  transform: translateX(260px);
+}
+.button.has-wave.is-sending .button__label,
+.button.has-wave.is-sent .button__label {
+  color: var(--ref-white);
+  transition: color var(--motion-base) var(--ease) var(--motion-fast);
+}
+
+/* ---------- penseelstreep onder de tekst ---------- */
+.button--under {
+  padding-inline: 0;
+  padding-bottom: calc(var(--space-3) + 0.45em);
+  color: var(--color-text);
+}
+.button__under {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--space-3);
+  width: 100%;
+  height: 0.45em;
+  overflow: visible;
+}
+.button__under path {
+  fill: currentColor;
+  opacity: 0.45;
+  transition: opacity var(--motion-base) var(--ease);
+}
+.button--under:hover .button__under path {
+  opacity: 0.9;
 }
 
 .button[disabled],
@@ -58,9 +127,20 @@
   opacity: 0.5;
   pointer-events: none;
 }
+/* de verzendknop toont zijn toestand zelf (golf); niet vervagen */
+.button.has-wave[aria-disabled='true'] {
+  opacity: 1;
+}
 
 @media (min-width: 600px) {
   .button {
     white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .button * {
+    transition: none !important;
   }
 }

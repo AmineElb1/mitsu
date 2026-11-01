@@ -1,79 +1,106 @@
-import { useRef } from 'react';
-import { brand, footer, photos } from '../content/site.js';
-import Logo from '../components/ui/Logo.jsx';
-import { gsap, duration } from '../lib/motion.js';
-import { useMotion } from '../hooks/useMotion.js';
+import { brand, footer, nav, photos } from '../content/site.js';
+import ThemeToggle from '../components/ui/ThemeToggle.jsx';
 import './Footer.css';
 
+/* eenvoudige lijnicoontjes, zelf getekend (geen icon-library nodig) */
+const icons = {
+  mail: (
+    <path d="M3 6.5h18v11H3z M3.5 7l8.5 6.5L20.5 7" />
+  ),
+  instagram: (
+    <>
+      <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.2" cy="6.8" r="0.6" className="footer__icon-dot" />
+    </>
+  ),
+  tiktok: <path d="M14 4v10.5a3.5 3.5 0 1 1-3.5-3.5 M14 4c.4 2.6 2.2 4.3 5 4.5" />
+};
+const Icon = ({ name }) => (
+  <svg className="footer__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    {icons[name]}
+  </svg>
+);
+
 export default function Footer() {
-  const root = useRef(null);
-
-  useMotion(root, ({ full }) => {
-    if (!full) return undefined;
-    const q = gsap.utils.selector(root);
-    gsap.from(q('.footer__char'), {
-      yPercent: 70,
-      opacity: 0,
-      duration: duration.slow * 2,
-      stagger: 0.1,
-      scrollTrigger: { trigger: q('.footer__mega')[0], start: 'top 95%', once: true }
-    });
-    return undefined;
-  });
-
   /* unieke fotografen, in volgorde van voorkomen */
   const credits = [...new Map(Object.values(photos).filter(p => p.by).map(p => [p.by, p])).values()];
+  const year = new Date().getFullYear();
 
   return (
-    <footer ref={root} className="footer" data-surface="blue">
-      <div className="container footer__top">
+    <footer className="footer" data-surface="blue">
+      <div className="container footer__grid">
         <div className="footer__brand">
-          <Logo label="Mitsu" />
+          <p className="footer__name display">{brand.name}</p>
           <p className="footer__blurb">{footer.blurb}</p>
           <p className="footer__kanji jp" lang="ja" aria-hidden="true">
             {brand.kanji} · {brand.kanjiLight}
           </p>
         </div>
 
-        <nav className="footer__cols" aria-label="Footer">
-          {footer.columns.map(col => (
-            <div key={col.title}>
-              <h2 className="footer__col-title label">{col.title}</h2>
-              <ul>
-                {col.links.map(l => (
-                  <li key={l.href}>
-                    <a href={l.href}>{l.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+        <nav className="footer__col" aria-label="Footer">
+          <h2 className="footer__title">{footer.links.title}</h2>
+          <ul className="footer__list">
+            {footer.links.items.map(l => (
+              <li key={l.href}>
+                <a className="footer__link" href={l.href}>
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         </nav>
 
-        <div className="footer__credits">
-          <h2 className="footer__col-title label">{footer.creditsTitle}</h2>
-          <p>{footer.creditsText}</p>
-          <ul className="footer__credit-list">
-            {credits.map(p => (
-              <li key={p.by}>
-                <a href={p.profile} target="_blank" rel="noopener noreferrer">
-                  {p.by}
+        <div className="footer__col">
+          <h2 className="footer__title">{footer.contactTitle}</h2>
+          <ul className="footer__list">
+            <li>
+              <a className="footer__link footer__link--icon" href={`mailto:${brand.email}`}>
+                <Icon name="mail" />
+                {brand.email}
+              </a>
+            </li>
+            {brand.socials.map(s => (
+              <li key={s.id}>
+                <a className="footer__link footer__link--icon" href={s.href} target="_blank" rel="noopener noreferrer">
+                  <Icon name={s.id} />
+                  <span className="sr-only">{s.label}: </span>
+                  {s.handle}
                 </a>
               </li>
             ))}
           </ul>
         </div>
+
+        <div className="footer__col">
+          <h2 className="footer__title">{footer.creditsTitle}</h2>
+          <p className="footer__small">{footer.creditsText}</p>
+          <ul className="footer__credits">
+            {credits.map(p => (
+              <li key={p.by}>
+                <a className="footer__link" href={p.profile} target="_blank" rel="noopener noreferrer">
+                  {p.by}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div className="footer__theme">
+            <span className="footer__small" aria-hidden="true">
+              {footer.themeLabel}
+            </span>
+            <ThemeToggle />
+          </div>
+        </div>
       </div>
 
-      <p className="container footer__demo label">{brand.demoNotice}</p>
-
-      <p className="footer__mega display" aria-hidden="true">
-        {brand.name.split('').map((c, i) => (
-          <span className="footer__char" key={i}>
-            {c}
-          </span>
-        ))}
-      </p>
+      <div className="container footer__bottom">
+        <p className="footer__small">
+          © {year} {footer.copyright}
+        </p>
+        <a className="footer__link footer__small" href="#top">
+          Naar boven ↑
+        </a>
+      </div>
     </footer>
   );
 }

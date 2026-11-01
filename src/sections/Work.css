@@ -37,14 +37,9 @@
   color: var(--color-text-muted);
 }
 
-.work__list {
-  display: grid;
-  gap: calc(var(--space-section) * 0.9);
-  margin-top: var(--space-8);
-}
-
 .work-item {
   position: relative;
+  margin-top: var(--space-8);
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-5);
@@ -74,6 +69,7 @@
 
 .work-item__copy {
   position: relative;
+  container: work-copy / inline-size;
   display: grid;
   gap: var(--space-4);
   align-content: start;
@@ -88,6 +84,17 @@
   gap: var(--space-3);
   color: var(--color-text-muted);
 }
+/* elk stuk blijft heel; past het niet, dan zakt "— Live" als geheel naar de volgende regel */
+.work-item__kind > span {
+  white-space: nowrap;
+}
+.work-item__kind {
+  flex-wrap: wrap;
+  row-gap: var(--space-1);
+}
+.work-item__status-word {
+  color: var(--color-accent-text);
+}
 .work-item__title {
   font-size: var(--text-h2);
   line-height: var(--leading-tight);
@@ -97,15 +104,28 @@
   max-width: 30em;
 }
 .work-item__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
+  display: grid;
+  gap: var(--space-1);
+  color: var(--color-text-muted);
 }
 .work-item__tags li {
-  padding: var(--space-1) var(--space-3);
-  border: var(--line-width) solid var(--color-line);
-  border-radius: var(--radius-pill);
   font-size: var(--text-2xs);
+}
+/* Op één regel met dunne lijntjes zodra het past; anders netjes onder elkaar, nooit half gebroken */
+@container work-copy (min-width: 24rem) {
+  .work-item__tags {
+    display: flex;
+    gap: 0;
+  }
+  .work-item__tags li:not(:last-child)::after {
+    content: '';
+    display: inline-block;
+    width: var(--line-width);
+    height: 0.9em;
+    margin-inline: var(--space-3);
+    vertical-align: -0.1em;
+    background: var(--color-line);
+  }
 }
 .work-item__copy .button {
   justify-self: start;
@@ -150,5 +170,52 @@
     align-self: start;
     margin-top: calc(var(--space-7) * -1);
     z-index: 1;
+  }
+}
+
+/* --- eerder werk van de makers: compact, drie naast elkaar op desktop --- */
+.work__earlier {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: calc(var(--space-section) * 0.9);
+}
+.work__earlier-title {
+  color: var(--color-text-muted);
+}
+.work__earlier-grid {
+  display: grid;
+  gap: var(--space-6);
+}
+.work-mini {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+}
+.work-mini__media,
+.work-mini__media .photo {
+  border-radius: var(--radius-m);
+}
+.work-mini__media .photo__img {
+  transition: transform var(--motion-slow) var(--ease);
+}
+.work-mini__media:hover .photo__img {
+  transform: scale(1.04);
+}
+.work-mini__kind {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+}
+.work-mini__title {
+  font-size: var(--text-h3);
+  line-height: var(--leading-tight);
+}
+.work-mini__text {
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+@media (min-width: 900px) {
+  .work__earlier-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

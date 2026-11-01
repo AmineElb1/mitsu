@@ -39,14 +39,6 @@ export const photos = {
     page: 'https://unsplash.com/photos/artists-studio-with-desk-chair-and-large-window-fybrevHYvWc',
     focus: '50% 50%'
   },
-  mossrock: {
-    id: '1683106185159-02271c70d15a',
-    alt: 'Close-up van dik, helgroen mos met kleine stenen',
-    by: 'engin akyurt',
-    profile: 'https://unsplash.com/@enginakyurt',
-    page: 'https://unsplash.com/photos/a-green-moss-covered-hillside-with-small-rocks-67k6x_Vr2_Y',
-    focus: '50% 50%'
-  },
   /* Japanse achtergrond en sfeer */
   fujisky: {
     id: '1747572495922-3a290b4ab14e',
@@ -80,26 +72,11 @@ export const photos = {
     alt: 'Amine in de boksring, in profiel, met een gouden hoofdband en zwart-oranje boksvest',
     focus: '38% 40%'
   },
-  holyprep: {
-    src: '/projects/holyprep.jpg',
-    alt: 'De website van Holy Prep met een bord curry, broccoli en rijst als hero-beeld',
-    focus: '50% 30%'
+  foodplug: {
+    src: '/projects/foodplug.jpg',
+    alt: 'De website van FoodPlug: “Eat & plug in”, een bakje cheesefries en de knop naar het menu',
+    focus: '0% 50%'
   },
-  mediahuis: {
-    src: '/projects/mediahuis.jpg',
-    alt: 'Raster van app-iconen van Mediahuis-nieuwsmerken op een roze achtergrond',
-    focus: '50% 50%'
-  },
-  easy2move: {
-    src: '/projects/easy2move.jpg',
-    alt: 'De website van Easy2Move op een laptop en een telefoon',
-    focus: '50% 50%'
-  },
-  ats: {
-    src: '/projects/ats.jpg',
-    alt: 'Het ATS-dashboard met een lijst van personen, rollen en acties',
-    focus: '0% 0%'
-  }
 };
 
 /* ---------------------------------------------------------------------------
@@ -110,18 +87,18 @@ export const brand = {
   kanji: '三つ',
   kanjiLight: '光',
   idea: 'Drie punten, één licht.',
-  /* Voorbeeld-contactgegevens op een gereserveerd domein; vervang door de echte. */
-  email: 'hallo@example.com',
-  demoNotice:
-    'Citaten en cijfers op deze site zijn voorbeeldcontent en vervangbaar in src/content/site.js.'
+  email: 'mitsu.site@outlook.com',
+  /* sociale kanalen: naam zoals getoond + link */
+  socials: [
+    { id: 'instagram', label: 'Instagram', handle: 'mitsu.site', href: 'https://www.instagram.com/mitsu.site/' },
+    { id: 'tiktok', label: 'TikTok', handle: 'mitsu.site', href: 'https://www.tiktok.com/@mitsu.site' }
+  ]
 };
 
 export const nav = [
   { label: 'Merkidee', href: '#idee' },
   { label: 'Werk', href: '#werk' },
-  { label: 'Diensten', href: '#diensten' },
-  { label: 'Makers', href: '#makers' },
-  { label: 'Verhalen', href: '#verhalen' }
+  { label: 'Diensten', href: '#diensten' }
 ];
 
 export const cta = {
@@ -147,10 +124,8 @@ export const manifest = {
   label: 'Wie we zijn',
   title: { strong: 'We maken merken die', em: 'licht', strongAfter: 'geven.' },
   ghost: 'En websites die dat licht vasthouden.',
-  intro:
-    'Een goed merk is geen lawaai. Het is een duidelijke keuze, rustig herhaald. Wij helpen je die keuze te vinden, en bouwen er vervolgens alles omheen wat nodig is om haar zichtbaar te maken.',
+  intro: 'Een goed merk is geen lawaai, maar een duidelijke keuze. Wij helpen je die te vinden en bouwen er je website rond.',
   highlight: 'Het draait om helderheid, richting en rust.',
-  body: 'We werken in kleine teams, met korte lijnen en weinig vergaderingen. Eén aanspreekpunt, één plan, één plek waar alles samenkomt. Zo houden we ruimte voor wat telt: goed kijken, goed kiezen en het goed afmaken.',
   strip: ['fujisky', 'studio', 'torii', 'hill']
 };
 
@@ -165,22 +140,23 @@ export const idea = {
     {
       n: '01',
       name: 'Richting',
-      colour: 'Diepblauw',
-      token: 'var(--point-3)',
+      /* kaart en woordkleur: van donker naar licht */
+      surface: 'paper',
+      word: 'var(--ref-blue-600)',
       text: 'We beginnen bij wat je zeker weet. Eén duidelijke keuze maakt alle volgende keuzes lichter.'
     },
     {
       n: '02',
       name: 'Ruimte',
-      colour: 'Lichtblauw',
-      token: 'var(--point-2)',
+      surface: 'blue',
+      word: 'var(--ref-blue-300)',
       text: 'Wat overbodig is, gaat eruit. Wat blijft, krijgt lucht, zodat je boodschap kan landen.'
     },
     {
       n: '03',
       name: 'Licht',
-      colour: 'Wit licht',
-      token: 'var(--point-1)',
+      surface: 'ink',
+      word: 'var(--ref-blue-100)',
       text: 'Het geheel moet iets verhelderen. Voor je klant, voor je team en voor jezelf.'
     }
   ]
@@ -192,45 +168,21 @@ export const idea = {
 export const work = {
   label: 'Geselecteerd werk',
   title: { before: 'Werk dat je', em: 'ziet', after: 'voordat je het leest.' },
-  intro: 'Een selectie van projecten waar we aan hebben gewerkt.',
+  intro: 'Wat we als Mitsu bouwden.',
+  /* Het eerste item staat groot; de rest compact onder `earlier`. `status` = badge, `href` = knop naar de site. */
+  earlier: { label: 'Eerder werk van de makers' },
   items: [
     {
-      id: 'holy-prep',
-      title: 'Holy Prep',
-      kind: 'Website en bestelfunctie',
-      status: 'In ontwikkeling',
-      tags: ['Webdesign', 'Webshop', 'Bestellen'],
-      text: 'Een website voor een maaltijdbereider, inclusief bestelfunctie. Momenteel in ontwikkeling.',
-      image: 'holyprep',
-      ratio: '4 / 3'
-    },
-    {
-      id: 'mediahuis',
-      title: 'Mediahuis',
-      kind: 'Apps',
-      tags: ['Mobiele apps', 'Nieuws', 'Merken'],
-      text: 'We werkten aan meer dan 25 nieuwsapps voor verschillende merken van Mediahuis.',
-      image: 'mediahuis',
-      ratio: '1 / 1'
-    },
-    {
-      id: 'easy2move',
-      title: 'Easy2Move',
-      kind: 'Boekingssysteem',
-      tags: ['Webdesign', 'Online boeken', 'Ontwikkeling'],
-      text: 'Easy2Move verhuurt ladderliften voor verhuizingen in Antwerpen. Wij bouwden hun volledige online boekingssysteem.',
-      image: 'easy2move',
-      ratio: '3 / 2'
-    },
-    {
-      id: 'ats',
-      title: 'ATS',
-      kind: 'Applicant Tracking System',
-      tags: ['Webapplicatie', 'Dashboard', 'Ontwikkeling'],
-      text: 'Een applicant tracking system om personen, vacatures en organisaties op één plek te beheren.',
-      image: 'ats',
+      id: 'foodplug',
+      title: 'FoodPlug',
+      kind: 'Website en bestellen',
+      status: 'Live',
+      href: 'https://www.foodplug.be/',
+      tags: ['Webdesign', 'Online bestellen', 'Afhalen'],
+      text: 'Halal burgerzaak in Antwerpen. Website met menu, online bestellen en afhalen, gebouwd en gelanceerd door Mitsu.',
+      image: 'foodplug',
       ratio: '16 / 9'
-    }
+    },
   ]
 };
 
@@ -240,33 +192,26 @@ export const work = {
 export const services = {
   label: 'Diensten',
   title: { before: 'Wat we voor je', em: 'doen', after: '' },
-  intro:
-    'Vier ambachten, één werkwijze. Je kiest één dienst of alle vier. Ze versterken elkaar, omdat ze vanuit hetzelfde punt vertrekken.',
+  intro: 'Drie dingen, goed gedaan.',
   cta: { label: 'Vraag naar de werkwijze', href: '#contact' },
   items: [
     {
       n: '01',
-      title: 'Merk & identiteit',
-      text: 'Strategie, naam, logo en huisstijl. We zoeken de kern van wie je bent en geven die een vorm die je jaren vol kunt houden.',
-      tags: ['Strategie', 'Logo', 'Huisstijl', 'Tone of voice']
+      title: 'Website',
+      text: 'Een snelle, toegankelijke site die klopt op elk scherm. Jij levert tekst en foto’s, wij doen de rest: van ontwerp tot lancering.',
+      tags: ['Ontwerp', 'Bouw', 'Mobiel', 'Toegankelijk']
     },
     {
       n: '02',
-      title: 'Websites',
-      text: 'Snelle, toegankelijke websites die kloppen op elk scherm. Ontworpen in componenten, zodat ze met je meegroeien.',
-      tags: ['Webdesign', 'React', 'Toegankelijkheid', 'CMS-koppeling']
+      title: 'Bestellen & webshop',
+      text: 'Online bestellen, afhalen of leveren, betalen inbegrepen. Op maat gebouwd, zonder dure platformkosten per bestelling.',
+      tags: ['Bestellen', 'Betalen', 'Menu', 'Webshop']
     },
     {
       n: '03',
-      title: 'Productontwerp',
-      text: 'Van eerste schets tot werkend prototype. We testen vroeg, laten weg wat niet nodig is en bouwen door op wat werkt.',
-      tags: ['UX', 'UI', 'Prototype', 'Designsystemen']
-    },
-    {
-      n: '04',
-      title: 'Beeld & beweging',
-      text: 'Fotografie-art-direction, motion en campagnebeeld. Eén visuele taal die over al je kanalen herkenbaar blijft.',
-      tags: ['Art direction', 'Motion', 'Campagne', 'Social']
+      title: 'Onderhoud & hosting',
+      text: 'We houden je site online, veilig en up-to-date, en passen kleine dingen aan als dat nodig is. Eén vast tarief, één aanspreekpunt.',
+      tags: ['Hosting', 'Updates', 'Domein', 'Support']
     }
   ]
 };
@@ -340,8 +285,6 @@ export const clients = {
   /* `shape`: 'mark' = (bijna) vierkant logo, 'wide' = breed woordmerk. `invert`: wit logo dat zwart getoond wordt. */
   items: [
     { name: 'Holy Prep', logo: '/logos/holyprep.png', shape: 'mark' },
-    { name: 'Mediahuis', logo: '/logos/mediahuis.png', shape: 'wide', invert: true },
-    { name: 'Easy2Move', logo: '/logos/easy2move.png', shape: 'wide' },
     { name: 'ATS', logo: '/logos/ats.png', shape: 'mark' },
     { name: 'Champions Gym', logo: '/logos/champions-gym.png', shape: 'mark' },
     { name: 'Little Sun', logo: '/logos/little-sun.png', shape: 'wide' }
@@ -354,10 +297,10 @@ export const clients = {
 export const contact = {
   label: 'Contact',
   title: { before: 'Laten we iets', em: 'helders', after: 'maken.' },
-  text: 'Vertel kort waar je mee bezig bent. We lezen alles zelf en reageren zo snel we kunnen, ook als het antwoord “nog niet” is.',
+  text: 'Vertel kort waar je mee bezig bent. We lezen elk bericht zelf en sturen je snel een eerlijk antwoord.',
   /* Laat leeg voor demo-modus. Vul een URL in om het formulier echt te versturen (POST, JSON). */
   endpoint: '',
-  topics: ['Merk', 'Website', 'Beeld', 'Iets anders'],
+  topics: ['Website', 'Bestellen', 'Onderhoud', 'Iets anders'],
   fields: {
     name: 'Naam',
     email: 'E-mailadres',
@@ -382,24 +325,18 @@ export const contact = {
    --------------------------------------------------------------------------- */
 export const footer = {
   blurb: 'Merk, web en beeld met één lichtpunt: helder, warm en zeker.',
-  columns: [
-    {
-      title: 'Ontdek',
-      links: [
-        { label: 'Merkidee', href: '#idee' },
-        { label: 'Werk', href: '#werk' },
-        { label: 'Diensten', href: '#diensten' },
-        { label: 'Makers', href: '#makers' }
-      ]
-    },
-    {
-      title: 'Praat met ons',
-      links: [
-        { label: 'Contactformulier', href: '#contact' },
-        { label: 'Naar boven', href: '#top' }
-      ]
-    }
-  ],
+  links: {
+    title: 'Snel naar',
+    items: [
+      { label: 'Merkidee', href: '#idee' },
+      { label: 'Diensten', href: '#diensten' },
+      { label: 'Werk', href: '#werk' },
+      { label: 'Contact', href: '#contact' }
+    ]
+  },
+  contactTitle: 'Contact',
   creditsTitle: 'Fotoverantwoording',
-  creditsText: 'Alle foto’s via Unsplash, onder de Unsplash License. Met dank aan:'
+  creditsText: 'Foto’s via Unsplash, onder de Unsplash License. Met dank aan:',
+  themeLabel: 'Thema',
+  copyright: 'Mitsu. Alle rechten voorbehouden.'
 };

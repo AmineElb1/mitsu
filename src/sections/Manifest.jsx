@@ -38,7 +38,7 @@ export default function Manifest() {
   return (
     <section ref={root} id="manifest" className="manifest section" aria-labelledby="manifest-title">
       <div className="container">
-        <SectionLabel n={1} total={8}>
+        <SectionLabel n={1} total={5}>
           {manifest.label}
         </SectionLabel>
 
@@ -54,7 +54,7 @@ export default function Manifest() {
             <p className="manifest__highlight">
               <span className="mark">{manifest.highlight}</span>
             </p>
-            <p className="manifest__body">{manifest.body}</p>
+            {manifest.body && <p className="manifest__body">{manifest.body}</p>}
           </div>
         </div>
       </div>

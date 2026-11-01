@@ -28,6 +28,8 @@
   font-size: var(--text-l);
   font-weight: var(--weight-ui-strong);
   line-height: 1.7;
+  /* verdeelt de zin evenwichtig over de regels, zodat er geen los woord achterblijft */
+  text-wrap: balance;
 }
 .manifest__body {
   color: var(--color-text-muted);

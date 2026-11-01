@@ -96,19 +96,17 @@
   align-items: center;
   gap: var(--space-4);
 }
-.idea__orb {
-  width: var(--space-7);
-  aspect-ratio: 1;
-  border-radius: var(--radius-pill);
-  background: var(--point);
-  box-shadow: 0 0 var(--space-7) var(--space-2) color-mix(in srgb, var(--point) 55%, transparent);
-}
 .idea__meta {
   color: var(--color-text-muted);
 }
 .idea__name {
   font-size: var(--text-h1);
   line-height: var(--leading-tight);
+  color: var(--word);
+}
+/* de zwarte kaart valt weg op de zwarte sectie: een dunne rand houdt hem zichtbaar */
+.idea__panel--ink {
+  border: var(--line-width) solid var(--color-line);
 }
 .idea__text {
   max-width: 28em;

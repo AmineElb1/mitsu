@@ -86,6 +86,14 @@ button {
   cursor: pointer;
 }
 
+/* geen grijze/blauwe flits bij tikken op mobiel; focus blijft zichtbaar via :focus-visible */
+a,
+button,
+label,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
 ::selection {
   background: var(--color-highlight);
   color: var(--color-on-highlight);

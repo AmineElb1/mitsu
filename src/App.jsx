@@ -8,9 +8,6 @@ import Manifest from './sections/Manifest.jsx';
 import Idea from './sections/Idea.jsx';
 import Work from './sections/Work.jsx';
 import Services from './sections/Services.jsx';
-import Makers from './sections/Makers.jsx';
-import Stories from './sections/Stories.jsx';
-import Quote from './sections/Quote.jsx';
 import Clients from './sections/Clients.jsx';
 import Contact from './sections/Contact.jsx';
 import Footer from './sections/Footer.jsx';
@@ -35,11 +32,8 @@ export default function App() {
           <Hero />
           <Manifest />
           <Idea />
-          <Work />
           <Services />
-          <Makers />
-          <Stories />
-          <Quote />
+          <Work />
           <Clients />
           <Contact />
         </main>

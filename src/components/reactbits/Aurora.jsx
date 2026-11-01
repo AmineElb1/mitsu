@@ -465,7 +465,8 @@ const Aurora = ({
       gl.deleteProgram(program.program);
       gl.deleteBuffer(buffer);
       gl.deleteVertexArray(vao);
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      /* Geen loseContext(): het canvas blijft hetzelfde element. In dev (StrictMode) mount het effect
+         twee keer; een verloren context gaf dan een dood canvas met een 'kapot'-icoontje linksboven. */
     };
   }, []);
 
