@@ -1,0 +1,88 @@
+/* Onderwerpkeuze zonder pills: tekst met een penseelstreek die naar de keuze kruipt. */
+.topic-choice {
+  position: relative;
+  /* smal: twee per rij; vanaf 600px alles op één lijn */
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: var(--space-4) var(--space-6);
+  padding-bottom: var(--space-3);
+}
+@media (min-width: 600px) {
+  .topic-choice {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--space-6);
+  }
+}
+.topic-choice__opt {
+  position: relative;
+  cursor: pointer;
+  /* geen blauwe flits bij tikken op mobiel; de streep toont de keuze al */
+  -webkit-tap-highlight-color: transparent;
+}
+.topic-choice__input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.topic-choice__text {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-size: var(--text-l);
+  font-weight: var(--weight-ui-strong);
+  line-height: 1.2;
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--color-text) 45%, transparent);
+  transition: color var(--motion-base) var(--ease);
+}
+.topic-choice__opt:hover .topic-choice__text {
+  color: var(--color-text-muted);
+}
+/* de keuze: helder wit tegenover gedimde andere opties */
+.topic-choice__opt.is-on .topic-choice__text {
+  color: var(--ref-white);
+}
+.topic-choice__input:focus-visible + .topic-choice__text {
+  border-radius: var(--radius-s);
+  box-shadow:
+    0 0 0 var(--focus-gap) var(--ref-blue-900),
+    0 0 0 calc(var(--focus-gap) + var(--focus-width)) var(--color-focus),
+    0 0 0 calc(var(--focus-gap) + var(--focus-width) + var(--focus-edge)) var(--color-focus-edge);
+}
+
+/* de streek: één svg, verplaatst en uitgerekt via transform (basisbreedte 100px) */
+.topic-choice__stroke {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  overflow: visible;
+  transform-origin: left top;
+  pointer-events: none;
+  will-change: transform;
+}
+.topic-choice__stroke path {
+  fill: var(--color-accent);
+}
+.topic-choice__stroke {
+  height: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topic-choice__text {
+    transition: none;
+  }
+}
+
+/* heel smalle schermen (320px): iets kleiner, zodat twee kolommen blijven passen */
+@media (max-width: 359px) {
+  .topic-choice {
+    column-gap: var(--space-4);
+  }
+  .topic-choice__text {
+    font-size: var(--text-m);
+  }
+}

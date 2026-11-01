@@ -1,32 +1,63 @@
+/* Het teken is bewust altijd zwart-wit (geen thematokens), zodat je ziet welke kant de overhand heeft. */
 .theme-toggle {
-  display: inline-grid;
-  place-items: center;
-  width: calc(var(--button-height) - var(--space-3));
-  aspect-ratio: 1;
+  width: 3.5rem;
+  height: 1.75rem;
+  padding: 0;
   border: 0;
   border-radius: var(--radius-pill);
   background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
-.theme-toggle__track {
-  position: relative;
-  width: var(--space-6);
-  height: var(--space-6);
-  border-radius: var(--radius-pill);
-  border: var(--line-width) solid var(--color-text);
-  overflow: hidden;
+.theme-toggle svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
-/* maan/zon: gevuld vlak dat meeschuift */
-.theme-toggle__thumb {
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-pill);
-  background: var(--color-text);
-  clip-path: inset(0 50% 0 0);
-  transition: clip-path var(--motion-base) var(--ease);
+.theme-toggle__paper {
+  fill: var(--ref-white);
 }
-.theme-toggle[aria-checked='true'] .theme-toggle__thumb {
-  clip-path: inset(0 0 0 50%);
+.theme-toggle__ink {
+  fill: var(--ref-black);
+  /* licht: zwart klein links; donker: zwart groot naar rechts */
+  transform: translateX(-12px);
+  transition: transform var(--motion-slow) var(--ease);
 }
-.theme-toggle:hover .theme-toggle__track {
-  border-color: var(--color-accent);
+.theme-toggle.is-dark .theme-toggle__ink {
+  transform: translateX(16px);
+}
+.theme-toggle__eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform var(--motion-slow) var(--ease);
+}
+.theme-toggle__eye--paper {
+  fill: var(--ref-white);
+  transform: scale(0.6);
+}
+.theme-toggle__eye--ink {
+  fill: var(--ref-black);
+  transform: scale(1.3);
+}
+.theme-toggle.is-dark .theme-toggle__eye--paper {
+  transform: scale(1.3);
+}
+.theme-toggle.is-dark .theme-toggle__eye--ink {
+  transform: scale(0.6);
+}
+.theme-toggle__rim {
+  fill: none;
+  stroke: var(--color-line);
+  stroke-width: 1.5;
+  transition: stroke var(--motion-base) var(--ease);
+}
+.theme-toggle:hover .theme-toggle__rim {
+  stroke: var(--color-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle * {
+    transition: none !important;
+  }
 }

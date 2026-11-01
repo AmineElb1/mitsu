@@ -96,6 +96,20 @@
 .hero__word-char {
   display: inline-block;
 }
+.hero__word-char--i {
+  position: relative;
+}
+/* het puntje van de i, op maat en plek van het echte tittel van Fraunces light */
+.hero__dot {
+  position: absolute;
+  left: 50%;
+  bottom: 0.575em;
+  width: 0.085em;
+  height: 0.085em;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  transform: translateX(-31%);
+}
 
 /* drie mensen, wazig, ónder de letters: de titel ligt erover */
 .hero__people {

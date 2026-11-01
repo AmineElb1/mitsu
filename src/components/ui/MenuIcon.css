@@ -1,0 +1,31 @@
+.menu-icon {
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--motion-slow) var(--ease);
+}
+.menu-icon.is-open {
+  transform: rotate(-45deg);
+}
+.menu-icon__loop {
+  stroke-dasharray: 12 63;
+  transition:
+    stroke-dasharray var(--motion-slow) var(--ease),
+    stroke-dashoffset var(--motion-slow) var(--ease);
+}
+.menu-icon.is-open .menu-icon__loop {
+  stroke-dasharray: 20 300;
+  stroke-dashoffset: -32.42px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-icon,
+  .menu-icon__loop {
+    transition: none;
+  }
+}

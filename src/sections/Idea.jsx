@@ -33,11 +33,6 @@ export default function Idea() {
         scrollTrigger: { trigger: root.current, start: 'top bottom', end: 'bottom top', scrub: true }
       }
     );
-    gsap.from(q('.idea__orb'), {
-      scale: 0,
-      stagger: 0.12,
-      scrollTrigger: { trigger: q('.idea__stack')[0], start: 'top 80%', once: true }
-    });
     return undefined;
   });
 
@@ -50,20 +45,18 @@ export default function Idea() {
       </div>
 
       <div className="container">
-        <SectionLabel n={2} total={8}>
+        <SectionLabel n={2} total={5}>
           {idea.label}
         </SectionLabel>
         <Heading id="idea-title" className="idea__title" parts={idea.title} />
 
         <ol className="idea__stack">
           {idea.points.map((p, i) => (
-            <li className="idea__card" style={{ '--i': i, '--point': p.token }} key={p.n}>
-              <article className="idea__panel" data-surface="paper">
+            <li className="idea__card" style={{ '--i': i, '--word': p.word }} key={p.n}>
+              {/* elk punt een eigen ondergrond; het woord draagt de kleur */}
+              <article className={`idea__panel idea__panel--${p.surface}`} data-surface={p.surface}>
                 <div className="idea__head">
-                  <span className="idea__orb" aria-hidden="true" />
-                  <span className="label idea__meta">
-                    {p.n} · {p.colour}
-                  </span>
+                  <span className="label idea__meta">{p.n}</span>
                 </div>
                 <h3 className="idea__name display">{p.name}</h3>
                 <p className="idea__text">{p.text}</p>

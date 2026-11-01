@@ -71,11 +71,18 @@ export default function Hero() {
         <h1 id="hero-title" className="hero__title">
           <span className="sr-only">Mitsu: {brand.idea}</span>
           <span className="hero__word display" aria-hidden="true">
-            {word.map((c, i) => (
-              <span className="hero__word-char" key={i}>
-                {c}
-              </span>
-            ))}
+            {word.map((c, i) =>
+              c === 'i' ? (
+                /* puntloze ı met een eigen, ronder puntje (het puntje van Fraunces is ovaal) */
+                <span className="hero__word-char hero__word-char--i" key={i}>
+                  ı<span className="hero__dot" />
+                </span>
+              ) : (
+                <span className="hero__word-char" key={i}>
+                  {c}
+                </span>
+              )
+            )}
           </span>
         </h1>
 
@@ -84,7 +91,7 @@ export default function Hero() {
             {hero.lead}
           </p>
           <div className="hero__cta" data-hero-fade>
-            <Button variant="primary" href={cta.primary.href} magnetic>
+            <Button variant="primary" href={cta.primary.href} sheen>
               {cta.primary.label}
             </Button>
             <Button variant="outline" href={cta.secondary.href}>

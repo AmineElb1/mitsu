@@ -1,104 +1,116 @@
 .footer {
   position: relative;
-  overflow: hidden;
   padding-top: var(--space-8);
   background: var(--color-bg);
   color: var(--color-text);
+  border-top: var(--line-width) solid var(--color-line);
 }
 
-.footer__top {
+/* vier kolommen op desktop, twee op tablet, één op mobiel */
+.footer__grid {
   display: grid;
-  gap: var(--space-7);
+  gap: var(--space-7) var(--space-6);
 }
+@media (min-width: 600px) {
+  .footer__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1200px) {
+  .footer__grid {
+    grid-template-columns: 1.3fr 1fr 1.2fr 1.1fr;
+  }
+}
+
 .footer__brand {
   display: grid;
   gap: var(--space-4);
   align-content: start;
-  justify-items: start;
+}
+.footer__name {
+  font-size: var(--text-h3);
+  line-height: 1;
 }
 .footer__blurb {
   max-width: 22em;
   color: var(--color-on-ink-muted);
 }
 .footer__kanji {
-  font-size: var(--text-h3);
   color: var(--color-text-dim);
 }
 
-.footer__cols {
+.footer__col {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-5);
+  gap: var(--space-4);
+  align-content: start;
 }
-.footer__col-title {
-  margin-bottom: var(--space-3);
-  color: var(--color-on-ink-muted);
+.footer__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-l);
+  font-weight: var(--weight-ui-strong);
 }
-.footer__cols ul {
+.footer__list {
   display: grid;
+  gap: var(--space-3);
+}
+.footer__link {
+  display: inline-flex;
+  align-items: center;
   gap: var(--space-2);
-}
-.footer__cols a {
-  display: inline-block;
-  padding-block: var(--space-1);
   text-decoration: none;
-  background: linear-gradient(var(--color-accent-text), var(--color-accent-text)) 0 100% / 0 var(--line-width) no-repeat;
-  transition: background-size var(--motion-base) var(--ease), color var(--motion-base) var(--ease);
+  color: var(--color-text);
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 var(--line-width) no-repeat;
+  transition: background-size var(--motion-base) var(--ease);
 }
-.footer__cols a:hover {
+.footer__link:hover {
   background-size: 100% var(--line-width);
 }
-
-.footer__credits {
-  color: var(--color-on-ink-muted);
-  font-size: var(--text-s);
+/* bij links met icoon alleen de tekst onderlijnen, niet het icoon */
+.footer__link--icon {
+  background-position: 1.6em 100%;
 }
-.footer__credit-list {
+.footer__link--icon:hover {
+  background-size: calc(100% - 1.6em) var(--line-width);
+}
+.footer__icon {
+  flex-shrink: 0;
+  width: 1.1em;
+  height: 1.1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  color: var(--color-on-ink-muted);
+}
+.footer__icon-dot {
+  fill: currentColor;
+  stroke: none;
+}
+
+.footer__small {
+  font-size: var(--text-s);
+  color: var(--color-on-ink-muted);
+}
+.footer__credits {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-1) var(--space-3);
+  gap: var(--space-2) var(--space-4);
+  font-size: var(--text-s);
+}
+.footer__theme {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
   margin-top: var(--space-3);
 }
-.footer__credit-list a {
-  color: var(--color-text);
-}
 
-.footer__demo {
-  margin-top: var(--space-7);
-  padding-top: var(--space-5);
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+  padding-block: var(--space-5) var(--space-6);
   border-top: var(--line-width) solid var(--color-line);
-  color: var(--color-on-ink-muted);
-  font-size: var(--text-2xs);
-  text-transform: none;
-  letter-spacing: 0.03em;
-  line-height: 1.6;
-}
-
-/* reusachtige wordmark, aan de onderkant afgesneden en uitlopend in gloed */
-.footer__mega {
-  position: relative;
-  margin: var(--space-6) 0 0;
-  font-size: var(--text-mega-footer);
-  font-weight: var(--weight-display);
-  line-height: 0.74;
-  letter-spacing: -0.04em;
-  text-align: center;
-  white-space: nowrap;
-  text-transform: lowercase;
-  user-select: none;
-  color: var(--color-accent);
-  -webkit-mask-image: linear-gradient(to bottom, var(--ref-black) 0%, var(--ref-black) 40%, transparent 96%);
-  mask-image: linear-gradient(to bottom, var(--ref-black) 0%, var(--ref-black) 40%, transparent 96%);
-  margin-bottom: -0.1em;
-  padding-bottom: 0.04em;
-}
-.footer__char {
-  display: inline-block;
-}
-
-@media (min-width: 900px) {
-  .footer__top {
-    grid-template-columns: 1.3fr 1fr 1fr;
-    gap: var(--space-8);
-  }
 }

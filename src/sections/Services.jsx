@@ -5,12 +5,20 @@ import Heading from '../components/ui/Heading.jsx';
 import Button from '../components/ui/Button.jsx';
 import { gsap, duration } from '../lib/motion.js';
 import { useMotion } from '../hooks/useMotion.js';
+import { useReducedMotion } from '../hooks/useReducedMotion.js';
+import { useGooRail } from '../hooks/useGooRail.js';
 import './Services.css';
 
 /** Diensten als grote titellijst: alleen de actieve titel is helder, de rest is spookachtig. */
 export default function Services() {
   const root = useRef(null);
+  const list = useRef(null);
+  const rail = useRef(null);
   const [active, setActive] = useState(0);
+  const reduced = useReducedMotion();
+
+  /* vloeibare bol naast de titels (zie hooks/useGooRail.js) */
+  useGooRail(rail, () => list.current?.querySelectorAll('.services__title-text'), active, 'y', reduced);
 
   useMotion(root, ({ full }) => {
     if (!full) return undefined;
@@ -43,7 +51,7 @@ export default function Services() {
 
       <div className="container services__grid">
         <div className="services__intro">
-          <SectionLabel n={4} total={8}>
+          <SectionLabel n={3} total={5}>
             {services.label}
           </SectionLabel>
           <Heading id="services-title" className="services__title" parts={services.title} />
@@ -53,6 +61,22 @@ export default function Services() {
           </Button>
         </div>
 
+        <div ref={list} className="services__list-wrap">
+          <svg className="services__goo-def" aria-hidden="true" focusable="false">
+            <filter id="services-goo">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+              <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="goo" />
+              <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+            </filter>
+          </svg>
+          <div ref={rail} className="services__rail" aria-hidden="true">
+            {services.items.map(item => (
+              <span className="goo__dot services__dot" key={item.n} />
+            ))}
+            <span className="goo__trail services__trail" />
+            <span className="goo__trail services__trail services__trail--small" />
+            <span className="goo__ball services__ball" />
+          </div>
         <ul className="services__list">
           {services.items.map((item, i) => {
             const open = active === i;
@@ -97,6 +121,7 @@ export default function Services() {
             );
           })}
         </ul>
+        </div>
       </div>
     </section>
   );
