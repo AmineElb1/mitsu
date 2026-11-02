@@ -55,7 +55,7 @@ export default function Services() {
             {services.label}
           </SectionLabel>
           <Heading id="services-title" className="services__title" parts={services.title} />
-          <p className="services__lead">{services.intro}</p>
+          {services.intro && <p className="services__lead">{services.intro}</p>}
           <Button variant="solid" href={services.cta.href}>
             {services.cta.label}
           </Button>

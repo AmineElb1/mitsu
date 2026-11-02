@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { manifest } from '../content/site.js';
 import SectionLabel from '../components/ui/SectionLabel.jsx';
-import Photo from '../components/ui/Photo.jsx';
 import SplitText from '../components/reactbits/SplitText.jsx';
 import { gsap, duration } from '../lib/motion.js';
 import { useMotion } from '../hooks/useMotion.js';
@@ -20,18 +19,6 @@ export default function Manifest() {
       stagger: 0.14,
       scrollTrigger: { trigger: q('[data-manifest-copy]')[0], start: 'top 85%', once: true }
     });
-    /* de strook beelden schuift in verschillende snelheden, als lagen */
-    q('.manifest__shot').forEach((el, i) =>
-      gsap.fromTo(
-        el,
-        { yPercent: i % 2 ? 14 : -4 },
-        {
-          yPercent: i % 2 ? -4 : 12,
-          ease: 'none',
-          scrollTrigger: { trigger: q('.manifest__strip')[0], start: 'top bottom', end: 'bottom top', scrub: true }
-        }
-      )
-    );
     return undefined;
   });
 
@@ -57,14 +44,6 @@ export default function Manifest() {
             {manifest.body && <p className="manifest__body">{manifest.body}</p>}
           </div>
         </div>
-      </div>
-
-      <div className="manifest__strip">
-        {manifest.strip.map((name, i) => (
-          <div className={`manifest__shot manifest__shot--${i + 1}`} key={name}>
-            <Photo name={name} sizes="(min-width: 900px) 25vw, 50vw" ratio="3 / 4" tone={name === 'studio' || name === 'torii' ? 'duotone' : 'natural'} />
-          </div>
-        ))}
       </div>
     </section>
   );

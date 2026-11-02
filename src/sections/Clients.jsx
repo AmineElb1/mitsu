@@ -26,7 +26,7 @@ export default function Clients() {
 
       <div className="clients__band">
         <div className="clients__loop">
-          <LogoLoop items={items} repeat={3} speed={44} label="Logo's van projecten waaraan we werkten" />
+          <LogoLoop items={items} repeat={3} speed={28} scrollBoost label="Logo's van projecten waaraan we werkten" />
         </div>
       </div>
     </section>
