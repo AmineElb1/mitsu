@@ -12,7 +12,8 @@ export default function Heading({ as = 'h2', parts, className = '', splitType = 
       {before}
       {before && ' '}
       {em && <em>{em}</em>}
-      {after && ' '}
+      {/* geen spatie voor een leesteken, anders staat er "praten ." */}
+      {after && !/^[.,!?]/.test(after) && ' '}
       {after}
     </SplitText>
   );

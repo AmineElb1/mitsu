@@ -1,4 +1,4 @@
-/* Knoppen zonder pill-vorm: een penseelstreek (hoofdknop) of een penseelstreep eronder (tweede knop). */
+/* Knoppen zonder pill-vorm: een verfvlak met licht ruwe rand (hoofdknop) of een penseelstreep eronder (tweede knop). */
 .button {
   position: relative;
   isolation: isolate;
@@ -29,13 +29,13 @@
   z-index: 1;
 }
 
-/* ---------- penseelstreek ---------- */
+/* ---------- verfvlak: blijft binnen de knop ---------- */
 .button__brush {
   position: absolute;
-  inset: -12% -4%;
+  inset: 0;
   z-index: 0;
-  width: 108%;
-  height: 124%;
+  width: 100%;
+  height: 100%;
   overflow: visible;
   transition: transform var(--motion-base) var(--ease);
 }
@@ -51,9 +51,9 @@
 .button--solid .button__brush-fill {
   fill: var(--color-text);
 }
-/* zonder licht: de streek zwelt een fractie aan */
+/* zonder licht: het vlak zwelt een fractie aan */
 .button--brush:not(.has-sheen):not(.has-wave):hover .button__brush {
-  transform: scale(1.03, 1.06);
+  transform: scale(1.02, 1.04);
 }
 
 /* licht dat binnen de streek overglijdt (alleen bij `sheen`) */

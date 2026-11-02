@@ -23,12 +23,13 @@ export default function Idea() {
         scrollTrigger: { trigger: cards[i + 1], start: 'top 85%', end: 'top 18%', scrub: true }
       });
     });
-    /* de grote spookwoorden drijven langzaam tegen de scroll in */
+    /* de grote spookwoorden drijven langzaam tegen de scroll in; ze eindigen links op de rand van de pagina,
+       zodat de eerste letter altijd zichtbaar blijft */
     gsap.fromTo(
       q('.idea__ghost'),
-      { xPercent: 8 },
+      { xPercent: 22 },
       {
-        xPercent: -22,
+        xPercent: 0,
         ease: 'none',
         scrollTrigger: { trigger: root.current, start: 'top bottom', end: 'bottom top', scrub: true }
       }

@@ -32,7 +32,7 @@ export default function Footer() {
       <div className="container footer__grid">
         <div className="footer__brand">
           <p className="footer__name display">{brand.name}</p>
-          <p className="footer__blurb">{footer.blurb}</p>
+          {footer.blurb && <p className="footer__blurb">{footer.blurb}</p>}
           <p className="footer__kanji jp" lang="ja" aria-hidden="true">
             {brand.kanji} · {brand.kanjiLight}
           </p>
@@ -73,17 +73,22 @@ export default function Footer() {
         </div>
 
         <div className="footer__col">
-          <h2 className="footer__title">{footer.creditsTitle}</h2>
-          <p className="footer__small">{footer.creditsText}</p>
-          <ul className="footer__credits">
-            {credits.map(p => (
-              <li key={p.by}>
-                <a className="footer__link" href={p.profile} target="_blank" rel="noopener noreferrer">
-                  {p.by}
-                </a>
-              </li>
-            ))}
-          </ul>
+          {/* alleen tonen als er nog foto's van anderen op de site staan */}
+          {credits.length > 0 && (
+            <>
+              <h2 className="footer__title">{footer.creditsTitle}</h2>
+              <p className="footer__small">{footer.creditsText}</p>
+              <ul className="footer__credits">
+                {credits.map(p => (
+                  <li key={p.by}>
+                    <a className="footer__link" href={p.profile} target="_blank" rel="noopener noreferrer">
+                      {p.by}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
           <div className="footer__theme">
             <span className="footer__small" aria-hidden="true">
               {footer.themeLabel}

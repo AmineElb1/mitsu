@@ -26,14 +26,6 @@ export default function Work() {
         scrollTrigger: { trigger: el, start: 'top 88%', once: true }
       })
     );
-    q('.work-item__index').forEach(el =>
-      gsap.from(el, {
-        opacity: 0,
-        xPercent: -12,
-        duration: duration.slow * 1.4,
-        scrollTrigger: { trigger: el, start: 'top 90%', once: true }
-      })
-    );
     gsap.from(q('.work-mini'), {
       opacity: 0,
       y: '3em',
@@ -46,9 +38,6 @@ export default function Work() {
 
   return (
     <section ref={root} id="werk" className="work section" aria-labelledby="work-title">
-      <p className="work__ghost display" aria-hidden="true">
-        mitsu
-      </p>
       <div className="container">
         <div className="work__head">
           <SectionLabel n={4} total={5}>
@@ -58,39 +47,36 @@ export default function Work() {
         <Heading id="work-title" className="work__title" parts={work.title} />
         <p className="work__note label">{work.intro}</p>
 
-        <article className="work-item work-item--a" aria-labelledby={`work-${featured.id}`}>
-          <p className="work-item__index display" aria-hidden="true">
-            01
-          </p>
-
+        {/* projectfiche: beeld links, korte feiten in rijen ernaast */}
+        <article className="work-item" aria-labelledby={`work-${featured.id}`}>
           <SpotlightCard tone="blue" layer="over" className="work-item__media">
             <Photo name={featured.image} sizes="(min-width: 900px) 58vw, 100vw" ratio={featured.ratio} parallax />
           </SpotlightCard>
 
           <div className="work-item__copy">
-            <p className="work-item__kind label">
-              <span>{featured.kind}</span>
-              {featured.status && (
-                <span className="work-item__status">
-                  <span aria-hidden="true">— </span>
-                  <span className="work-item__status-word">{featured.status}</span>
-                </span>
-              )}
-            </p>
             <SplitText as="h3" id={`work-${featured.id}`} className="work-item__title display" splitType="chars" stagger={0.03}>
               {featured.title}
             </SplitText>
             <p className="work-item__text">{featured.text}</p>
-            <ul className="work-item__tags" aria-label="Disciplines">
-              {featured.tags.map(t => (
-                <li className="label" key={t}>
-                  {t}
-                </li>
-              ))}
-            </ul>
+            <dl className="work-item__facts">
+              <div>
+                <dt className="label">{work.facts.kind}</dt>
+                <dd>{featured.kind}</dd>
+              </div>
+              <div>
+                <dt className="label">{work.facts.tags}</dt>
+                <dd>{featured.tags.join(', ')}</dd>
+              </div>
+              {featured.status && (
+                <div>
+                  <dt className="label">{work.facts.status}</dt>
+                  <dd className="work-item__status">{featured.status}</dd>
+                </div>
+              )}
+            </dl>
             {featured.href && (
               <Button variant="outline" href={featured.href} target="_blank" rel="noopener noreferrer">
-                Bekijk de site
+                {featured.cta || 'Bekijk de site'}
               </Button>
             )}
           </div>

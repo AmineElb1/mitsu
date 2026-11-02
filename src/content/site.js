@@ -23,39 +23,6 @@ export const imageConfig = {
  * `focus` = CSS object-position, zodat de crop op het onderwerp blijft
  */
 export const photos = {
-  hill: {
-    id: '1755210345899-0d22f72680e7',
-    alt: 'Groene berghelling in Aso, Japan, onder een wolkendek met zacht licht',
-    by: 'Gaku Suyama',
-    profile: 'https://unsplash.com/@gakusuyama',
-    page: 'https://unsplash.com/photos/lush-green-hillside-under-a-cloudy-sky-d7aTQFj3qhY',
-    focus: '50% 70%'
-  },
-  studio: {
-    id: '1755520795091-adf1f3f307e0',
-    alt: 'Zonnige atelierruimte met een lange werktafel, een oranje bureaustoel en een groot raam',
-    by: 'Clay Banks',
-    profile: 'https://unsplash.com/@claybanks',
-    page: 'https://unsplash.com/photos/artists-studio-with-desk-chair-and-large-window-fybrevHYvWc',
-    focus: '50% 50%'
-  },
-  /* Japanse achtergrond en sfeer */
-  fujisky: {
-    id: '1747572495922-3a290b4ab14e',
-    alt: 'De besneeuwde Fuji onder een heldere blauwe lucht met een wolk links',
-    by: 'sun hung',
-    profile: 'https://unsplash.com/@sunhung',
-    page: 'https://unsplash.com/photos/mount-fuji-japan-under-a-bright-blue-sky-IliUebaF7wE',
-    focus: '50% 40%'
-  },
-  torii: {
-    id: '1763092806297-b2ea9763f118',
-    alt: 'Houten torii-poort in dichte mist op een zwart lavaveld bij de Fuji',
-    by: 'Sudhan Chitgopkar',
-    profile: 'https://unsplash.com/@chitgopkar',
-    page: 'https://unsplash.com/photos/wooden-torii-gate-in-a-foggy-forest-setting-VCqbCEUzIYM',
-    focus: '50% 50%'
-  },
   /* eigen foto's en projectbeelden (public/): geen Unsplash, geen bronvermelding nodig */
   zayd: {
     src: '/makers/zayd.jpg',
@@ -95,15 +62,16 @@ export const brand = {
   ]
 };
 
+/* zelfde volgorde als de secties op de pagina */
 export const nav = [
-  { label: 'Merkidee', href: '#idee' },
-  { label: 'Werk', href: '#werk' },
-  { label: 'Diensten', href: '#diensten' }
+  { label: 'Werkwijze', href: '#idee' },
+  { label: 'Diensten', href: '#diensten' },
+  { label: 'Werk', href: '#werk' }
 ];
 
 export const cta = {
   header: { label: 'Plan een kennismaking', href: '#contact' },
-  primary: { label: 'Bekijk het werk', href: '#werk' },
+  primary: { label: 'Bekijk ons werk', href: '#werk' },
   secondary: { label: 'Plan een kennismaking', href: '#contact' }
 };
 
@@ -112,7 +80,7 @@ export const cta = {
    --------------------------------------------------------------------------- */
 export const hero = {
   tagline: { before: 'Drie punten, één', em: 'licht', after: '.' },
-  lead: 'Mitsu geeft merken een heldere kern en een website die dat licht vasthoudt. Kort, warm en zeker, van eerste gesprek tot lancering.',
+  lead: 'Bij Mitsu bouwen we websites die je zaak een heldere kern geven. Strak ontworpen en makkelijk te beheren.',
   /* Naam van een foto uit `photos` voor een fotoachtergrond; leeg = alleen de blauwe lucht. */
   image: ''
 };
@@ -122,42 +90,41 @@ export const hero = {
    --------------------------------------------------------------------------- */
 export const manifest = {
   label: 'Wie we zijn',
-  title: { strong: 'We maken merken die', em: 'licht', strongAfter: 'geven.' },
-  ghost: 'En websites die dat licht vasthouden.',
-  intro: 'Een goed merk is geen lawaai, maar een duidelijke keuze. Wij helpen je die te vinden en bouwen er je website rond.',
-  highlight: 'Het draait om helderheid, richting en rust.',
-  strip: ['fujisky', 'studio', 'torii', 'hill']
+  title: { strong: 'Drie makers,', em: 'één', strongAfter: 'doel:' },
+  ghost: 'een website die bij je zaak past.',
+  intro: 'Je krijgt één aanspreekpunt, een duidelijke prijs en een site die op elk scherm goed werkt. Wij doen het ontwerp, de bouw en het onderhoud.',
+  highlight: 'Zodat jij kan focussen op je zaak, terwijl je website klanten binnenbrengt.',
 };
 
 /* ---------------------------------------------------------------------------
-   02 Merkidee: drie punten
+   02 Werkwijze: drie stappen (sectie-id blijft #idee)
    --------------------------------------------------------------------------- */
 export const idea = {
-  label: 'Merkidee',
+  label: 'Werkwijze',
   title: { before: 'Drie punten,', em: 'één', after: 'licht.' },
   ghost: 'één licht',
   points: [
     {
       n: '01',
-      name: 'Richting',
+      name: 'Kennismaken',
       /* kaart en woordkleur: van donker naar licht */
       surface: 'paper',
       word: 'var(--ref-blue-600)',
-      text: 'We beginnen bij wat je zeker weet. Eén duidelijke keuze maakt alle volgende keuzes lichter.'
+      text: 'We luisteren naar wat je zaak nodig heeft en maken een duidelijk voorstel.'
     },
     {
       n: '02',
-      name: 'Ruimte',
+      name: 'Ontwerpen & bouwen',
       surface: 'blue',
       word: 'var(--ref-blue-300)',
-      text: 'Wat overbodig is, gaat eruit. Wat blijft, krijgt lucht, zodat je boodschap kan landen.'
+      text: 'Je kijkt mee terwijl je site vorm krijgt, en stuurt bij waar nodig.'
     },
     {
       n: '03',
-      name: 'Licht',
+      name: 'Lanceren',
       surface: 'ink',
       word: 'var(--ref-blue-100)',
-      text: 'Het geheel moet iets verhelderen. Voor je klant, voor je team en voor jezelf.'
+      text: 'Je site gaat live, en we blijven betrokken bij wat volgt.'
     }
   ]
 };
@@ -167,10 +134,12 @@ export const idea = {
    --------------------------------------------------------------------------- */
 export const work = {
   label: 'Geselecteerd werk',
-  title: { before: 'Werk dat je', em: 'ziet', after: 'voordat je het leest.' },
+  title: { before: 'Ons', em: 'werk', after: '' },
   intro: 'Wat we als Mitsu bouwden.',
   /* Het eerste item staat groot; de rest compact onder `earlier`. `status` = badge, `href` = knop naar de site. */
   earlier: { label: 'Eerder werk van de makers' },
+  /* labels van de projectfiche */
+  facts: { kind: 'Wat', tags: 'Onderdelen', status: 'Status' },
   items: [
     {
       id: 'foodplug',
@@ -178,6 +147,7 @@ export const work = {
       kind: 'Website en bestellen',
       status: 'Live',
       href: 'https://www.foodplug.be/',
+      cta: 'Bezoek foodplug.be',
       tags: ['Webdesign', 'Online bestellen', 'Afhalen'],
       text: 'Halal burgerzaak in Antwerpen. Website met menu, online bestellen en afhalen, gebouwd en gelanceerd door Mitsu.',
       image: 'foodplug',
@@ -191,9 +161,9 @@ export const work = {
    --------------------------------------------------------------------------- */
 export const services = {
   label: 'Diensten',
-  title: { before: 'Wat we voor je', em: 'doen', after: '' },
-  intro: 'Drie dingen, goed gedaan.',
-  cta: { label: 'Vraag naar de werkwijze', href: '#contact' },
+  title: { before: 'Wat we', em: 'doen', after: '' },
+  intro: '',
+  cta: { label: 'Bespreek je project', href: '#contact' },
   items: [
     {
       n: '01',
@@ -210,7 +180,7 @@ export const services = {
     {
       n: '03',
       title: 'Onderhoud & hosting',
-      text: 'We houden je site online, veilig en up-to-date, en passen kleine dingen aan als dat nodig is. Eén vast tarief, één aanspreekpunt.',
+      text: 'We houden je site online, veilig en up-to-date, en passen kleine dingen aan als dat nodig is.',
       tags: ['Hosting', 'Updates', 'Domein', 'Support']
     }
   ]
@@ -284,6 +254,7 @@ export const clients = {
   title: 'Merken waar we aan bouwden',
   /* `shape`: 'mark' = (bijna) vierkant logo, 'wide' = breed woordmerk. `invert`: wit logo dat zwart getoond wordt. */
   items: [
+    { name: 'FoodPlug', logo: '/logos/foodplug.png', shape: 'wide' },
     { name: 'Holy Prep', logo: '/logos/holyprep.png', shape: 'mark' },
     { name: 'ATS', logo: '/logos/ats.png', shape: 'mark' },
     { name: 'Champions Gym', logo: '/logos/champions-gym.png', shape: 'mark' },
@@ -296,7 +267,7 @@ export const clients = {
    --------------------------------------------------------------------------- */
 export const contact = {
   label: 'Contact',
-  title: { before: 'Laten we iets', em: 'helders', after: 'maken.' },
+  title: { before: 'Laten we', em: 'praten', after: '.' },
   text: 'Vertel kort waar je mee bezig bent. We lezen elk bericht zelf en sturen je snel een eerlijk antwoord.',
   /* Laat leeg voor demo-modus. Vul een URL in om het formulier echt te versturen (POST, JSON). */
   endpoint: '',
@@ -307,7 +278,7 @@ export const contact = {
     topic: 'Waarover gaat het?',
     message: 'Je bericht'
   },
-  submit: 'Verstuur bericht',
+  submit: 'Stuur je aanvraag',
   privacy: 'We gebruiken je gegevens alleen om te antwoorden.',
   success: {
     live: 'Bedankt, je bericht is verstuurd. We komen er snel op terug.',
@@ -324,11 +295,11 @@ export const contact = {
    Footer
    --------------------------------------------------------------------------- */
 export const footer = {
-  blurb: 'Merk, web en beeld met één lichtpunt: helder, warm en zeker.',
+  blurb: '',
   links: {
     title: 'Snel naar',
     items: [
-      { label: 'Merkidee', href: '#idee' },
+      { label: 'Werkwijze', href: '#idee' },
       { label: 'Diensten', href: '#diensten' },
       { label: 'Werk', href: '#werk' },
       { label: 'Contact', href: '#contact' }
@@ -339,4 +310,4 @@ export const footer = {
   creditsText: 'Foto’s via Unsplash, onder de Unsplash License. Met dank aan:',
   themeLabel: 'Thema',
   copyright: 'Mitsu. Alle rechten voorbehouden.'
-};
+};
