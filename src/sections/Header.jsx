@@ -1,16 +1,19 @@
-import { useEffect, useRef, useState } from "react";
-import { brand, cta, nav } from "../content/site.js";
-import Logo from "../components/ui/Logo.jsx";
-import Button from "../components/ui/Button.jsx";
-import MenuIcon from "../components/ui/MenuIcon.jsx";
-import { gsap, duration, EASE } from "../lib/motion.js";
-import { CustomEase } from "gsap/CustomEase";
-import "./Header.css";
+import { useEffect, useRef, useState } from 'react';
+import { brand, cta, nav } from '../content/site.js';
+import Logo from '../components/ui/Logo.jsx';
+import Button from '../components/ui/Button.jsx';
+import MenuIcon from '../components/ui/MenuIcon.jsx';
+import { gsap, duration, EASE } from '../lib/motion.js';
+import { CustomEase } from 'gsap/CustomEase';
+import './Header.css';
+
+/* dezelfde penseelstreep als onder de tweede knop (viewBox 200 × 12) */
+const UNDER = 'M2 7C40 3 90 4 130 5C160 6 185 4 198 6L197 9C150 10 80 11 3 10Z';
 
 /* Breedte van de gebogen rand links van het menu, in px (zelfde als in Header.css) */
 const CURVE = 100;
 /* Traag vertrekken, snel door het midden, zacht landen: voelt als een doek dat dichtschuift */
-CustomEase.create("menu", "M0,0 C0.76,0 0.24,1 1,1");
+CustomEase.create('menu', 'M0,0 C0.76,0 0.24,1 1,1');
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -24,12 +27,12 @@ export default function Header() {
   /* Intro: de balk zakt in na de hero-intro */
   useEffect(() => {
     const ctx = gsap.context(() => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       gsap.from(barRef.current, {
         yPercent: -140,
         opacity: 0,
         duration: duration.slow,
-        delay: 0.4,
+        delay: 0.4
       });
     }, barRef);
     return () => ctx.revert();
@@ -42,8 +45,8 @@ export default function Header() {
       setHidden(y > lastY.current && y > window.innerHeight * 0.6 && !open);
       lastY.current = y;
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, [open]);
 
   /* Menu start buiten beeld rechts, met de bolle rand volledig uitgezet */
@@ -61,14 +64,14 @@ export default function Header() {
     }
     const menu = menuRef.current;
     const curve = curveRef.current;
-    const items = menu.querySelectorAll("[data-menu-item]");
+    const items = menu.querySelectorAll('[data-menu-item]');
     gsap.killTweensOf([menu, curve, items]);
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       gsap.set(menu, {
         xPercent: 0,
         x: 0,
-        visibility: open ? "visible" : "hidden",
+        visibility: open ? 'visible' : 'hidden'
       });
       gsap.set(curve, { scaleX: 0 });
       gsap.set(items, { opacity: 1, y: 0 });
@@ -77,9 +80,9 @@ export default function Header() {
 
     const tl = gsap.timeline();
     if (open) {
-      tl.set(menu, { visibility: "visible" })
-        .to(menu, { xPercent: 0, x: 0, duration: 0.8, ease: "menu" }, 0)
-        .to(curve, { scaleX: 0, duration: 1, ease: "menu" }, 0)
+      tl.set(menu, { visibility: 'visible' })
+        .to(menu, { xPercent: 0, x: 0, duration: 0.8, ease: 'menu' }, 0)
+        .to(curve, { scaleX: 0, duration: 1, ease: 'menu' }, 0)
         .fromTo(
           items,
           { opacity: 0, y: 24 },
@@ -88,14 +91,14 @@ export default function Header() {
             y: 0,
             stagger: 0.06,
             duration: duration.slow,
-            ease: EASE,
+            ease: EASE
           },
-          0.35,
+          0.35
         );
     } else {
-      tl.to(menu, { xPercent: 100, x: CURVE, duration: 0.8, ease: "menu" }, 0)
-        .to(curve, { scaleX: 1, duration: 0.8, ease: "menu" }, 0)
-        .set(menu, { visibility: "hidden" });
+      tl.to(menu, { xPercent: 100, x: CURVE, duration: 0.8, ease: 'menu' }, 0)
+        .to(curve, { scaleX: 1, duration: 0.8, ease: 'menu' }, 0)
+        .set(menu, { visibility: 'hidden' });
     }
     return () => tl.kill();
   }, [open]);
@@ -103,24 +106,24 @@ export default function Header() {
   /* Menu: Escape sluit, scrollen vergrendeld */
   useEffect(() => {
     if (!open) return undefined;
-    const onKey = (e) => {
-      if (e.key === "Escape") {
+    const onKey = e => {
+      if (e.key === 'Escape') {
         setOpen(false);
         toggleRef.current?.focus();
       }
     };
-    document.addEventListener("keydown", onKey);
-    document.documentElement.classList.add("menu-open");
+    document.addEventListener('keydown', onKey);
+    document.documentElement.classList.add('menu-open');
     /* focus naar de eerste link, zodat toetsenbord en schermlezer meteen in het menu zitten */
-    menuRef.current?.querySelector("a")?.focus({ preventScroll: true });
+    menuRef.current?.querySelector('a')?.focus({ preventScroll: true });
     return () => {
-      document.removeEventListener("keydown", onKey);
-      document.documentElement.classList.remove("menu-open");
+      document.removeEventListener('keydown', onKey);
+      document.documentElement.classList.remove('menu-open');
     };
   }, [open]);
 
   return (
-    <header className={`header ${hidden ? "is-hidden" : ""}`}>
+    <header className={`header ${hidden ? 'is-hidden' : ''}`}>
       <div ref={barRef} className="header__bar">
         <a className="header__logo" href="#top" aria-label="Mitsu, naar de top">
           <Logo label="Mitsu" />
@@ -128,10 +131,19 @@ export default function Header() {
 
         <nav className="header__nav" aria-label="Hoofdnavigatie">
           <ul>
-            {nav.map((item) => (
+            {nav.map(item => (
               <li key={item.href}>
                 <a className="header__link label" href={item.href}>
                   {item.label}
+                  <svg
+                    className="header__under"
+                    viewBox="0 0 200 12"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path d={UNDER} />
+                  </svg>
                 </a>
               </li>
             ))}
@@ -139,12 +151,7 @@ export default function Header() {
         </nav>
 
         <div className="header__actions">
-          <Button
-            className="header__cta"
-            variant="primary"
-            href={cta.header.href}
-            sheen
-          >
+          <Button className="header__cta" variant="primary" href={cta.header.href} sheen>
             {cta.header.label}
           </Button>
           <button
@@ -153,9 +160,9 @@ export default function Header() {
             type="button"
             aria-expanded={open}
             aria-controls="menu"
-            onClick={() => setOpen((o) => !o)}
+            onClick={() => setOpen(o => !o)}
           >
-            <span className="sr-only">{open ? "Sluit menu" : "Open menu"}</span>
+            <span className="sr-only">{open ? 'Sluit menu' : 'Open menu'}</span>
             <MenuIcon open={open} />
           </button>
         </div>
@@ -178,14 +185,8 @@ export default function Header() {
             <ul>
               {nav.map((item, i) => (
                 <li key={item.href} data-menu-item>
-                  <a
-                    className="menu__link display"
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                  >
-                    <span className="menu__num label">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
+                  <a className="menu__link display" href={item.href} onClick={() => setOpen(false)}>
+                    <span className="menu__num label">{String(i + 1).padStart(2, '0')}</span>
                     {item.label}
                   </a>
                 </li>
@@ -193,11 +194,7 @@ export default function Header() {
             </ul>
           </nav>
           <div className="menu__cta" data-menu-item>
-            <Button
-              variant="primary"
-              href={cta.header.href}
-              onClick={() => setOpen(false)}
-            >
+            <Button variant="primary" href={cta.header.href} onClick={() => setOpen(false)}>
               {cta.header.label}
             </Button>
           </div>
@@ -206,14 +203,9 @@ export default function Header() {
               {brand.kanji} · {brand.kanjiLight}
             </p>
             <ul className="menu__socials">
-              {brand.socials.map((s) => (
+              {brand.socials.map(s => (
                 <li key={s.id}>
-                  <a
-                    className="label"
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a className="label" href={s.href} target="_blank" rel="noopener noreferrer">
                     {s.label}
                   </a>
                 </li>

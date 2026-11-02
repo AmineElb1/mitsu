@@ -62,15 +62,16 @@ export const brand = {
   ]
 };
 
+/* zelfde volgorde als de secties op de pagina */
 export const nav = [
   { label: 'Werkwijze', href: '#idee' },
-  { label: 'Werk', href: '#werk' },
-  { label: 'Diensten', href: '#diensten' }
+  { label: 'Diensten', href: '#diensten' },
+  { label: 'Werk', href: '#werk' }
 ];
 
 export const cta = {
   header: { label: 'Plan een kennismaking', href: '#contact' },
-  primary: { label: 'Bekijk het werk', href: '#werk' },
+  primary: { label: 'Bekijk ons werk', href: '#werk' },
   secondary: { label: 'Plan een kennismaking', href: '#contact' }
 };
 
@@ -137,6 +138,8 @@ export const work = {
   intro: 'Wat we als Mitsu bouwden.',
   /* Het eerste item staat groot; de rest compact onder `earlier`. `status` = badge, `href` = knop naar de site. */
   earlier: { label: 'Eerder werk van de makers' },
+  /* labels van de projectfiche */
+  facts: { kind: 'Wat', tags: 'Onderdelen', status: 'Status' },
   items: [
     {
       id: 'foodplug',
@@ -144,6 +147,7 @@ export const work = {
       kind: 'Website en bestellen',
       status: 'Live',
       href: 'https://www.foodplug.be/',
+      cta: 'Bezoek foodplug.be',
       tags: ['Webdesign', 'Online bestellen', 'Afhalen'],
       text: 'Halal burgerzaak in Antwerpen. Website met menu, online bestellen en afhalen, gebouwd en gelanceerd door Mitsu.',
       image: 'foodplug',
@@ -159,7 +163,7 @@ export const services = {
   label: 'Diensten',
   title: { before: 'Wat we', em: 'doen', after: '' },
   intro: '',
-  cta: { label: 'Vraag naar de werkwijze', href: '#contact' },
+  cta: { label: 'Bespreek je project', href: '#contact' },
   items: [
     {
       n: '01',
@@ -250,6 +254,7 @@ export const clients = {
   title: 'Merken waar we aan bouwden',
   /* `shape`: 'mark' = (bijna) vierkant logo, 'wide' = breed woordmerk. `invert`: wit logo dat zwart getoond wordt. */
   items: [
+    { name: 'FoodPlug', logo: '/logos/foodplug.png', shape: 'wide' },
     { name: 'Holy Prep', logo: '/logos/holyprep.png', shape: 'mark' },
     { name: 'ATS', logo: '/logos/ats.png', shape: 'mark' },
     { name: 'Champions Gym', logo: '/logos/champions-gym.png', shape: 'mark' },
@@ -273,7 +278,7 @@ export const contact = {
     topic: 'Waarover gaat het?',
     message: 'Je bericht'
   },
-  submit: 'Verstuur bericht',
+  submit: 'Stuur je aanvraag',
   privacy: 'We gebruiken je gegevens alleen om te antwoorden.',
   success: {
     live: 'Bedankt, je bericht is verstuurd. We komen er snel op terug.',

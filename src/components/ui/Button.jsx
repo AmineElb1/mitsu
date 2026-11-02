@@ -1,16 +1,15 @@
 import { useId } from 'react';
 import './Button.css';
 
-/* Penseelstreek achter de hoofdknop: ronde aanzet links, rechts zacht uitlopend (viewBox 200 × 60). */
-const BRUSH =
-  'M16 15C46 8 148 6 184 11C195 13 199 21 195 28C192 34 197 41 189 46C148 54 62 54 18 50C7 49 3 41 5 33C6 25 7 19 16 15Z';
+/* Verfvlak achter de hoofdknop: een rechthoek binnen de knop; de ruwe rand komt van het filter (viewBox 200 × 60). */
+const BRUSH = 'M9 6H191Q196 6 196 11V49Q196 54 191 54H9Q4 54 4 49V11Q4 6 9 6Z';
 /* Penseelstreep onder de tweede knop (viewBox 200 × 12). */
 const UNDER = 'M2 7C40 3 90 4 130 5C160 6 185 4 198 6L197 9C150 10 80 11 3 10Z';
 
 /**
  * Twee vormen, geen pills:
- *  primary — penseelstreek in lichtblauw (de hoofdknop)
- *  solid   — dezelfde streek in tekstkleur (op donkere vlakken)
+ *  primary — verfvlak in lichtblauw met een licht ruwe rand (de hoofdknop)
+ *  solid   — hetzelfde vlak in tekstkleur (op donkere vlakken)
  *  outline — tekst met een penseelstreep eronder (de tweede knop)
  * `sheen`: bij hover glijdt een strook licht door de streek. Alleen gebruiken bij de belangrijkste knoppen.
  * `wave` + `state` ('idle' | 'sending' | 'sent'): water loopt door de streek — een randje bij hover,
@@ -37,10 +36,10 @@ export default function Button({
     <>
       <svg className="button__brush" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
         <defs>
-          {/* lichte ruwheid op de rand, zoals papier dat inkt opzuigt (statisch filter, animeert niet) */}
+          {/* licht ruwe rand, zoals verf op papier (statisch filter, animeert niet) */}
           <filter id={`brush-rough-${id}`}>
-            <feTurbulence type="fractalNoise" baseFrequency="0.04 0.5" numOctaves="2" seed="7" />
-            <feDisplacementMap in="SourceGraphic" scale="2" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.09 0.6" numOctaves="2" seed="3" />
+            <feDisplacementMap in="SourceGraphic" scale="2.5" />
           </filter>
           {(sheen || wave) && (
             <clipPath id={`brush-clip-${id}`}>

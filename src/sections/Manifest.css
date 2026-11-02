@@ -12,7 +12,8 @@
   font-size: var(--text-h2);
 }
 .manifest__ghost {
-  color: var(--color-text-dim);
+  /* merkblauw i.p.v. gedimd: gedimd op donker had te weinig contrast */
+  color: var(--color-accent-text);
 }
 .manifest__copy {
   display: grid;
