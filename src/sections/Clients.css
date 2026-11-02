@@ -61,6 +61,10 @@
   height: auto;
   width: clamp(9rem, 15vw, 14rem);
 }
+/* licht thema: een zachte schaduw geeft lichte logo's (Little Sun) een rand tegen het lichtblauw */
+:root:not([data-theme='dark']) .client {
+  filter: drop-shadow(0 1px 3px color-mix(in srgb, var(--ref-blue-900) 18%, transparent));
+}
 .client.is-inverted {
   filter: brightness(0);
 }
