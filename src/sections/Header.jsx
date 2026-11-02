@@ -168,7 +168,7 @@ export default function Header() {
         </div>
       </div>
 
-      <div id="menu" ref={menuRef} className="menu" data-surface="ink">
+      <div id="menu" ref={menuRef} className="menu" data-surface="night">
         <svg
           ref={curveRef}
           className="menu__curve"
