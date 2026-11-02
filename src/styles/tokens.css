@@ -69,6 +69,9 @@
   color-scheme: light;
 
   --color-page: var(--ref-white); /* achtergrond van de pagina zelf; verandert niet binnen inkt-vlakken */
+  --sky: color-mix(in srgb, var(--ref-blue-300) 38%, var(--ref-white)); /* zacht blauw voor contact en footer */
+  --sea-top: var(--sky); /* bovenkant van het contactvlak: daar loopt de logo-rij in over */
+  --sea-bottom: var(--sky); /* sluit naadloos aan op de footer */
   --color-bg: var(--ref-white);
   --color-bg-raised: color-mix(in srgb, var(--ref-white) 50%, var(--ref-blue-100));
   --color-bg-sunken: var(--ref-blue-100);
@@ -98,6 +101,8 @@
 
 :root[data-theme='dark'] {
   --color-page: var(--ref-black);
+  --sea-top: var(--ref-blue-900);
+  --sea-bottom: color-mix(in srgb, var(--ref-blue-900) 88%, var(--ref-black));
 }
 
 /* -------------------------------------------------------------------------
@@ -160,6 +165,74 @@
   --color-emphasis: var(--ref-black);
   --color-focus-edge: var(--ref-black);
   --color-glass: color-mix(in srgb, var(--ref-white) 88%, transparent);
+}
+
+/* -------------------------------------------------------------------------
+   2b'. Vlakken die met het thema meegaan
+   night: donker thema = inkt, licht thema = mist (heel lichtblauw)
+   deep:  donker thema = diepblauw, licht thema = lucht (zacht blauw)
+   Zo blijft de afwisseling tussen vlakken, maar in het licht thema met lichte kleuren.
+   ------------------------------------------------------------------------- */
+[data-surface='night'],
+[data-surface='deep'] {
+  color-scheme: light;
+  --color-text: var(--ref-black);
+  --color-text-muted: color-mix(in srgb, var(--ref-black) 70%, var(--color-bg));
+  --color-text-dim: color-mix(in srgb, var(--ref-black) 52%, var(--color-bg));
+  --color-text-ghost: color-mix(in srgb, var(--ref-blue-600) 16%, var(--color-bg));
+  --color-line: color-mix(in srgb, var(--ref-blue-900) 16%, transparent);
+  --color-accent-text: var(--ref-blue-600);
+  --color-emphasis: var(--ref-blue-600);
+  --color-focus-edge: var(--ref-black);
+  --color-glass: color-mix(in srgb, var(--ref-white) 80%, transparent);
+  --color-on-ink-muted: var(--color-text-muted);
+  --panel-dim: var(--ref-blue-100);
+}
+[data-surface='night'] {
+  --color-bg: var(--ref-blue-100);
+  --color-bg-raised: var(--ref-white);
+  --color-bg-sunken: color-mix(in srgb, var(--ref-blue-100) 70%, var(--ref-blue-300));
+}
+[data-surface='deep'] {
+  --color-bg: var(--sky);
+  --color-bg-raised: color-mix(in srgb, var(--ref-white) 55%, var(--sky));
+  --color-bg-sunken: color-mix(in srgb, var(--sky) 80%, var(--ref-blue-300));
+}
+
+/* in het donker thema zijn het gewoon de bekende donkere vlakken */
+:root[data-theme='dark'] [data-surface='night'] {
+  color-scheme: dark;
+  --color-bg: var(--ref-black);
+  --color-bg-raised: color-mix(in srgb, var(--ref-black) 90%, var(--ref-blue-300));
+  --color-bg-sunken: color-mix(in srgb, var(--ref-black) 94%, var(--ref-blue-300));
+  --color-text: var(--ref-white);
+  --color-text-muted: color-mix(in srgb, var(--ref-white) 74%, var(--ref-black));
+  --color-text-dim: color-mix(in srgb, var(--ref-white) 50%, var(--ref-black));
+  --color-text-ghost: color-mix(in srgb, var(--ref-white) 16%, var(--ref-black));
+  --color-line: color-mix(in srgb, var(--ref-white) 18%, transparent);
+  --color-accent-text: var(--ref-blue-300);
+  --color-emphasis: var(--ref-blue-300);
+  --color-focus-edge: var(--ref-white);
+  --color-glass: color-mix(in srgb, var(--ref-black) 66%, transparent);
+  --color-on-ink-muted: color-mix(in srgb, var(--ref-white) 76%, var(--ref-black));
+  --panel-dim: var(--ref-black);
+}
+:root[data-theme='dark'] [data-surface='deep'] {
+  color-scheme: dark;
+  --color-bg: var(--ref-blue-900);
+  --color-bg-raised: color-mix(in srgb, var(--ref-blue-900) 82%, var(--ref-blue-300));
+  --color-bg-sunken: color-mix(in srgb, var(--ref-blue-900) 80%, var(--ref-black));
+  --color-text: var(--ref-white);
+  --color-text-muted: color-mix(in srgb, var(--ref-white) 78%, var(--ref-blue-900));
+  --color-text-dim: color-mix(in srgb, var(--ref-white) 56%, var(--ref-blue-900));
+  --color-text-ghost: color-mix(in srgb, var(--ref-white) 18%, var(--ref-blue-900));
+  --color-line: color-mix(in srgb, var(--ref-white) 24%, transparent);
+  --color-accent-text: var(--ref-blue-300);
+  --color-emphasis: var(--ref-blue-300);
+  --color-focus-edge: var(--ref-white);
+  --color-glass: color-mix(in srgb, var(--ref-blue-900) 62%, transparent);
+  --color-on-ink-muted: color-mix(in srgb, var(--ref-white) 76%, var(--ref-black));
+  --panel-dim: var(--ref-black);
 }
 
 /* -------------------------------------------------------------------------

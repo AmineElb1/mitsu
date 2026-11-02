@@ -1,6 +1,7 @@
 .idea {
   overflow: clip;
-  background: var(--color-bg);
+  /* bovenaan zacht vanuit de paginakleur, zodat de overgang vloeit (in donker thema zijn beide zwart) */
+  background: linear-gradient(to bottom, var(--color-page), var(--color-bg) 14rem);
 }
 
 .idea__bg {
@@ -37,7 +38,7 @@
   font-style: italic;
   line-height: 0.8;
   white-space: nowrap;
-  color: color-mix(in srgb, var(--ref-white) 8%, transparent);
+  color: color-mix(in srgb, var(--color-text) 8%, transparent);
   font-size: 30vw;
 }
 
@@ -86,7 +87,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--ref-black);
+  background: var(--panel-dim, var(--ref-black));
   opacity: var(--dim, 0);
   pointer-events: none;
 }
@@ -104,8 +105,26 @@
   line-height: var(--leading-tight);
   color: var(--word);
 }
+/* licht thema: de lichte woordkleuren vallen weg op lichte kaarten; dan overal het leesbare blauw */
+:root:not([data-theme='dark']) .idea__name {
+  color: var(--ref-blue-600);
+}
+/* licht thema, kaart 3: vol merkblauw met witte tekst, zodat de drie kaarten oplopen van wit naar blauw */
+:root:not([data-theme='dark']) .idea__panel--night {
+  --color-bg: var(--ref-blue-600);
+  --color-text: var(--ref-white);
+  --color-text-muted: color-mix(in srgb, var(--ref-white) 86%, var(--ref-blue-600));
+  --color-line: color-mix(in srgb, var(--ref-white) 24%, transparent);
+  border-color: transparent;
+}
+:root:not([data-theme='dark']) .idea__panel--night .idea__name {
+  color: var(--ref-white);
+}
+:root:not([data-theme='dark']) .idea__ghost {
+  color: color-mix(in srgb, var(--ref-blue-600) 12%, transparent);
+}
 /* de zwarte kaart valt weg op de zwarte sectie: een dunne rand houdt hem zichtbaar */
-.idea__panel--ink {
+.idea__panel--night {
   border: var(--line-width) solid var(--color-line);
 }
 .idea__text {

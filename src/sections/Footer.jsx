@@ -28,7 +28,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="footer" data-surface="blue">
+    <footer className="footer" data-surface="deep">
       <div className="container footer__grid">
         <div className="footer__brand">
           <p className="footer__name display">{brand.name}</p>

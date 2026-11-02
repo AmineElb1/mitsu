@@ -12,9 +12,9 @@
   inset: 0;
   background: linear-gradient(
     to bottom,
-    var(--ref-blue-900) 0%,
-    color-mix(in srgb, var(--ref-blue-900) 78%, var(--ref-blue-600)) 55%,
-    color-mix(in srgb, var(--ref-blue-900) 88%, var(--ref-black)) 100%
+    var(--sea-top) 0%,
+    color-mix(in srgb, var(--sea-top) 78%, var(--ref-blue-600)) 55%,
+    var(--sea-bottom) 100%
   );
 }
 

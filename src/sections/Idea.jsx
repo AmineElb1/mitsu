@@ -38,7 +38,7 @@ export default function Idea() {
   });
 
   return (
-    <section ref={root} id="idee" className="idea section" data-surface="ink" aria-labelledby="idea-title">
+    <section ref={root} id="idee" className="idea section" data-surface="night" aria-labelledby="idea-title">
       <div className="idea__bg" aria-hidden="true">
         <span className="idea__glow idea__glow--strong" />
         <span className="idea__glow idea__glow--soft" />

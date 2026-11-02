@@ -43,12 +43,12 @@
 }
 /* de keuze: helder wit tegenover gedimde andere opties */
 .topic-choice__opt.is-on .topic-choice__text {
-  color: var(--ref-white);
+  color: var(--color-text);
 }
 .topic-choice__input:focus-visible + .topic-choice__text {
   border-radius: var(--radius-s);
   box-shadow:
-    0 0 0 var(--focus-gap) var(--ref-blue-900),
+    0 0 0 var(--focus-gap) var(--color-bg),
     0 0 0 calc(var(--focus-gap) + var(--focus-width)) var(--color-focus),
     0 0 0 calc(var(--focus-gap) + var(--focus-width) + var(--focus-edge)) var(--color-focus-edge);
 }

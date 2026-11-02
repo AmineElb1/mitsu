@@ -17,7 +17,7 @@ export default function Clients() {
   ));
 
   return (
-    <section id="projecten" className="clients section" data-surface="paper" aria-labelledby="clients-title">
+    <section id="projecten" className="clients section" aria-labelledby="clients-title">
       <div className="container clients__head">
         <SplitText as="h2" id="clients-title" className="clients__title display" splitType="words">
           {clients.title}
