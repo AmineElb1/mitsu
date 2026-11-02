@@ -279,6 +279,7 @@ export const contact = {
     message: 'Je bericht'
   },
   submit: 'Stuur je aanvraag',
+  requiredNote: 'Velden met * zijn verplicht',
   privacy: 'We gebruiken je gegevens alleen om te antwoorden.',
   success: {
     live: 'Bedankt, je bericht is verstuurd. We komen er snel op terug.',
