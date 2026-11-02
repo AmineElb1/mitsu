@@ -76,6 +76,12 @@ export default function Contact() {
       <div className={`field ${errors[id] ? 'has-error' : ''}`}>
         <label className="field__label label" htmlFor={`contact-${id}`}>
           {label}
+          {/* sterretje alleen voor het oog; schermlezers krijgen 'verplicht' via het required-attribuut */}
+          {rest.required && (
+            <span className="field__req" aria-hidden="true">
+              {' '}*
+            </span>
+          )}
         </label>
         <Tag
           id={`contact-${id}`}
@@ -115,6 +121,9 @@ export default function Contact() {
         </div>
 
         <form ref={form} className="contact__card" onSubmit={onSubmit} noValidate aria-describedby="contact-privacy">
+          <p className="contact__required label" aria-hidden="true">
+            {contact.requiredNote}
+          </p>
           {field('name', f.name, { type: 'text', autoComplete: 'name', required: true })}
           {field('email', f.email, { type: 'email', autoComplete: 'email', required: true, inputMode: 'email' })}
 

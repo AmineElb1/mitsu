@@ -71,6 +71,13 @@
 .field__label {
   color: var(--color-on-ink-muted);
 }
+.field__req {
+  color: var(--color-accent-text);
+}
+.contact__required {
+  color: var(--color-text-muted);
+  font-size: var(--text-2xs);
+}
 .field__control {
   width: 100%;
   min-height: var(--field-height);
