@@ -43,7 +43,7 @@ export default function Services() {
   });
 
   return (
-    <section ref={root} id="diensten" className="services section" data-surface="ink" aria-labelledby="services-title">
+    <section ref={root} id="diensten" className="services section" data-surface="night" aria-labelledby="services-title">
       <div className="services__bg" aria-hidden="true">
         <span className="services__glow" />
         <span className="services__glow services__glow--soft" />

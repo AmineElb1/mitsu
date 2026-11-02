@@ -95,7 +95,7 @@ export default function Contact() {
   };
 
   return (
-    <section ref={root} id="contact" className="contact section" data-surface="blue" aria-labelledby="contact-title">
+    <section ref={root} id="contact" className="contact section" data-surface="deep" aria-labelledby="contact-title">
       {/* water: een rustig diepblauw vlak, waar de druppel uit de hero in valt */}
       <div className="contact__bg" aria-hidden="true">
         <div className="contact__water" />

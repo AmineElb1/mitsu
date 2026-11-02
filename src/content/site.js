@@ -115,14 +115,14 @@ export const idea = {
     {
       n: '02',
       name: 'Ontwerpen & bouwen',
-      surface: 'blue',
+      surface: 'deep',
       word: 'var(--ref-blue-300)',
       text: 'Je kijkt mee terwijl je site vorm krijgt, en stuurt bij waar nodig.'
     },
     {
       n: '03',
       name: 'Lanceren',
-      surface: 'ink',
+      surface: 'night',
       word: 'var(--ref-blue-100)',
       text: 'Je site gaat live, en we blijven betrokken bij wat volgt.'
     }

@@ -18,13 +18,20 @@
   min-height: 44svh;
   margin-top: var(--space-6);
   padding-top: var(--space-7);
+  --band-1: var(--ref-blue-100);
+  --band-2: color-mix(in srgb, var(--ref-blue-100) 40%, var(--sky));
   background: linear-gradient(
     to bottom,
     var(--color-bg) 0%,
-    var(--ref-blue-100) 34%,
-    color-mix(in srgb, var(--ref-blue-300) 70%, var(--ref-white)) 62%,
-    var(--ref-blue-900) 100%
+    var(--band-1) 34%,
+    var(--band-2) 62%,
+    var(--sea-top) 100%
   );
+}
+/* donker thema: de lucht wordt nacht — van zwart via diepblauw naar het contactvlak */
+[data-theme='dark'] .clients__band {
+  --band-1: color-mix(in srgb, var(--ref-blue-900) 35%, var(--color-bg));
+  --band-2: color-mix(in srgb, var(--ref-blue-900) 75%, var(--color-bg));
 }
 .clients__loop {
   min-width: 0;

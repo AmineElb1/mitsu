@@ -1,6 +1,7 @@
 .services {
   overflow: clip;
-  background: var(--color-bg);
+  /* onderaan zacht terug naar de paginakleur, zodat Werk er vloeiend onder begint */
+  background: linear-gradient(to top, var(--color-page), var(--color-bg) 14rem);
 }
 
 .services__bg {
