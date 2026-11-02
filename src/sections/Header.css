@@ -155,6 +155,10 @@
   font-size: var(--text-h3);
   color: var(--color-text-ghost);
 }
+/* licht thema: het spookgrijs viel bijna weg op het lichte menu */
+:root:not([data-theme='dark']) .menu__kanji {
+  color: var(--color-text-dim);
+}
 .menu__socials {
   display: grid;
   justify-items: end;
