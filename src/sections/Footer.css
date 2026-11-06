@@ -59,18 +59,32 @@
   gap: var(--space-2);
   text-decoration: none;
   color: var(--color-text);
-  background: linear-gradient(currentColor, currentColor) 0 100% / 0 var(--line-width) no-repeat;
-  transition: background-size var(--motion-base) var(--ease);
+  position: relative;
 }
-.footer__link:hover {
-  background-size: 100% var(--line-width);
+/* onderlijn die van links uitstrijkt, via transform. ::before, want ::after is het grotere raakvlak uit base.css */
+.footer__link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--line-width);
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-base) var(--ease);
+}
+.footer__link:focus-visible::before {
+  transform: scaleX(1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .footer__link:hover::before {
+    transform: scaleX(1);
+  }
 }
 /* bij links met icoon alleen de tekst onderlijnen, niet het icoon */
-.footer__link--icon {
-  background-position: 1.6em 100%;
-}
-.footer__link--icon:hover {
-  background-size: calc(100% - 1.6em) var(--line-width);
+.footer__link--icon::before {
+  left: 1.6em;
 }
 .footer__icon {
   flex-shrink: 0;

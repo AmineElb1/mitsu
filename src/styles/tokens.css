@@ -27,6 +27,9 @@
   --ref-blue-600: #2f78b8; /* tekst/lijnen op wit (4,7:1), lucht-top */
   --ref-blue-900: #0c3358; /* diepblauw, voor footer en glas */
 
+  /* uitzondering op het ene-kleur-palet: enkel voor 'verzonden' (wit erop haalt 5,2:1) */
+  --ref-green-600: #2f7a4f;
+
   /* spacing 4 · 8 · 12 · 16 · 24 · 32 · 48 · 72 (in rem, zodat het meeschaalt) */
   --ref-space-4: 0.25rem;
   --ref-space-8: 0.5rem;

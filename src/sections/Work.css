@@ -40,8 +40,10 @@
 .work-item__media .photo__img {
   transition: transform var(--motion-slow) var(--ease);
 }
-.work-item__media:hover .photo__img {
-  transform: scale(1.04);
+@media (hover: hover) and (pointer: fine) {
+  .work-item__media:hover .photo__img {
+    transform: scale(1.04);
+  }
 }
 
 .work-item__copy {
@@ -117,8 +119,10 @@
 .work-mini__media .photo__img {
   transition: transform var(--motion-slow) var(--ease);
 }
-.work-mini__media:hover .photo__img {
-  transform: scale(1.04);
+@media (hover: hover) and (pointer: fine) {
+  .work-mini__media:hover .photo__img {
+    transform: scale(1.04);
+  }
 }
 .work-mini__kind {
   margin-top: var(--space-2);

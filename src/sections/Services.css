@@ -126,11 +126,20 @@
   background: transparent;
   text-align: left;
   color: var(--color-text-dim);
-  transition: color var(--motion-slow) var(--ease);
+  transition:
+    color 200ms var(--ease),
+    transform var(--motion-fast) var(--ease);
 }
-.services__item.is-active .services__trigger,
-.services__trigger:hover {
+.services__trigger:active {
+  transform: scale(0.99);
+}
+.services__item.is-active .services__trigger {
   color: var(--color-text);
+}
+@media (hover: hover) and (pointer: fine) {
+  .services__trigger:hover {
+    color: var(--color-text);
+  }
 }
 .services__title-text {
   font-size: var(--text-h2);
@@ -140,7 +149,7 @@
 .services__num {
   flex-shrink: 0;
   color: inherit;
-  transition: color var(--motion-slow) var(--ease);
+  transition: color 200ms var(--ease);
 }
 .services__item.is-active .services__num {
   color: var(--color-accent-text);
@@ -150,7 +159,8 @@
 .services__panel {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows var(--motion-slow) var(--ease);
+  /* hoogte is de enige uitzondering op 'enkel transform/opacity': een paneel dat openklapt kan niet anders; kort houden */
+  transition: grid-template-rows 300ms var(--ease);
 }
 .services__item.is-active .services__panel {
   grid-template-rows: 1fr;
@@ -161,7 +171,22 @@
   min-height: 0;
   overflow: hidden;
   visibility: hidden;
-  transition: visibility var(--motion-slow);
+  transition: visibility 300ms;
+}
+/* de inhoud komt zacht binnen terwijl het paneel opent, en verdwijnt snel bij dichtklappen */
+.services__panel-inner > * {
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 150ms var(--ease),
+    transform 150ms var(--ease);
+}
+.services__item.is-active .services__panel-inner > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 220ms var(--ease) 80ms,
+    transform 260ms var(--ease) 80ms;
 }
 .services__item.is-active .services__panel-inner {
   visibility: visible;

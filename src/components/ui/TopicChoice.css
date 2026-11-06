@@ -38,10 +38,17 @@
   white-space: nowrap;
   /* 62%: leesbaar (45% haalde maar 3,2:1); de streep toont welke gekozen is */
   color: color-mix(in srgb, var(--color-text) 62%, transparent);
-  transition: color var(--motion-base) var(--ease);
+  transition:
+    color var(--motion-base) var(--ease),
+    transform var(--motion-fast) var(--ease);
 }
-.topic-choice__opt:hover .topic-choice__text {
-  color: var(--color-text-muted);
+.topic-choice__opt:active .topic-choice__text {
+  transform: scale(0.97);
+}
+@media (hover: hover) and (pointer: fine) {
+  .topic-choice__opt:hover .topic-choice__text {
+    color: var(--color-text-muted);
+  }
 }
 /* de keuze: helder wit tegenover gedimde andere opties */
 .topic-choice__opt.is-on .topic-choice__text {

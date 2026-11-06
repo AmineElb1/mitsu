@@ -102,8 +102,10 @@ textarea.field__control {
   min-height: calc(var(--field-height) * 2);
   line-height: 1.4;
 }
-.field__control:hover {
-  border-bottom-color: var(--color-accent);
+@media (hover: hover) and (pointer: fine) {
+  .field__control:hover {
+    border-bottom-color: var(--color-accent);
+  }
 }
 .field__control:focus-visible {
   border-bottom-color: var(--color-accent);
@@ -166,6 +168,16 @@ textarea.field__control {
 }
 .contact__status:empty {
   display: none;
+}
+.contact__sent,
+.contact__failed {
+  animation: contact-status-in 200ms var(--ease);
+}
+@keyframes contact-status-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
 }
 .contact__sent {
   padding: var(--space-4);

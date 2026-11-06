@@ -12,10 +12,15 @@
   will-change: transform;
 }
 
-.loop:hover .loop__track,
 .loop:focus-within .loop__track,
 .loop:focus-visible .loop__track {
   animation-play-state: paused;
+}
+/* enkel met een muis: op gsm zou de band na een tik blijven stilstaan */
+@media (hover: hover) and (pointer: fine) {
+  .loop:hover .loop__track {
+    animation-play-state: paused;
+  }
 }
 
 .loop__list {
