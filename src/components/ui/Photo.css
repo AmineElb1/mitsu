@@ -42,8 +42,10 @@
   background: var(--ref-blue-300);
   mix-blend-mode: multiply;
 }
-.photo--duotone:hover .photo__tint {
-  opacity: 0.4;
+@media (hover: hover) and (pointer: fine) {
+  .photo--duotone:hover .photo__tint {
+    opacity: 0.4;
+  }
 }
 
 .photo__credit {
@@ -68,10 +70,15 @@
   letter-spacing: 0.04em;
   text-transform: none;
 }
-.photo:hover .photo__credit,
 .photo:focus-within .photo__credit {
   opacity: 1;
   transform: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .photo:hover .photo__credit {
+    opacity: 1;
+    transform: none;
+  }
 }
 @media (hover: none) {
   .photo__credit {

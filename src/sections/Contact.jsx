@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { contact } from '../content/site.js';
 import SectionLabel from '../components/ui/SectionLabel.jsx';
 import Heading from '../components/ui/Heading.jsx';
@@ -16,7 +16,9 @@ export default function Contact() {
   const root = useRef(null);
   const form = useRef(null);
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // idle | sending | sent | failed
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | failed (de melding onder het formulier)
+  const [button, setButton] = useState('idle'); // zelfde toestanden, maar de knop keert na even terug naar idle
+  const resetTimer = useRef(0);
   const [topic, setTopic] = useState(contact.topics[0]);
 
   useMotion(root, ({ full }) => {
@@ -31,8 +33,18 @@ export default function Contact() {
     return undefined;
   });
 
+  /* knop toont het resultaat even, en is daarna weer klaar; de melding eronder blijft staan */
+  const showResult = result => {
+    setStatus(result);
+    setButton(result);
+    clearTimeout(resetTimer.current);
+    resetTimer.current = setTimeout(() => setButton('idle'), result === 'sent' ? 2000 : 2500);
+  };
+  useEffect(() => () => clearTimeout(resetTimer.current), []);
+
   const onSubmit = async event => {
     event.preventDefault();
+    if (button === 'sending') return;
     const data = Object.fromEntries(new FormData(form.current));
     const next = {};
     if (!data.name?.trim()) next.name = contact.errors.name;
@@ -47,25 +59,33 @@ export default function Contact() {
 
     /* honeypot: een verborgen veld dat enkel bots invullen; dan doen we alsof alles lukte */
     if (data.website) {
-      setStatus('sent');
+      showResult('sent');
       return;
     }
 
-    setStatus('sending');
+    clearTimeout(resetTimer.current);
+    setStatus('idle');
+    setButton('sending');
+    // spinner minstens even tonen: een flits van een halve tel leest als een fout
+    const minimum = new Promise(r => setTimeout(r, 700));
     try {
       // niet gekoppeld = eerlijk mislukken, nooit doen alsof het verstuurd is
       if (!supabaseReady) throw new Error('niet gekoppeld');
-      await insertAanvraag({
-        naam: data.name.trim(),
-        email: data.email.trim(),
-        onderwerp: topic,
-        bericht: data.message.trim()
-      });
-      setStatus('sent');
+      await Promise.all([
+        insertAanvraag({
+          naam: data.name.trim(),
+          email: data.email.trim(),
+          onderwerp: topic,
+          bericht: data.message.trim()
+        }),
+        minimum
+      ]);
+      showResult('sent');
       form.current.reset();
       setTopic(contact.topics[0]);
     } catch {
-      setStatus('failed');
+      await minimum;
+      showResult('failed');
     }
   };
 
@@ -141,14 +161,8 @@ export default function Contact() {
           </div>
 
           <div className="contact__submit">
-            <Button
-              variant="primary"
-              type="submit"
-              wave
-              state={status === 'sending' || status === 'sent' ? status : 'idle'}
-              aria-disabled={status === 'sending' || undefined}
-            >
-              {status === 'sending' ? 'Even geduld…' : status === 'sent' ? 'Verzonden' : contact.submit}
+            <Button variant="primary" type="submit" status={button} aria-disabled={button === 'sending' || undefined}>
+              {contact.submit}
             </Button>
             <p className="contact__privacy label" id="contact-privacy">
               {contact.privacy}

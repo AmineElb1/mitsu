@@ -8,6 +8,19 @@
   background: transparent;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  transition: transform var(--motion-fast) var(--ease);
+}
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+/* raakvlak van minstens 44px hoog, zonder dat de schakelaar groter oogt */
+.theme-toggle {
+  position: relative;
+}
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  inset: -0.5rem -0.25rem;
 }
 .theme-toggle svg {
   display: block;

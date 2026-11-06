@@ -4,10 +4,12 @@
   z-index: var(--z-header);
   padding-inline: var(--gutter);
   pointer-events: none;
-  transition: transform var(--motion-slow) var(--ease);
+  /* verschijnen 250ms: je ziet dit tientallen keren per bezoek, traag voelt achterlopend */
+  transition: transform 250ms var(--ease);
 }
 .header.is-hidden {
   transform: translateY(calc(-100% - var(--space-5)));
+  transition-duration: 200ms;
 }
 /* toetsenbordgebruikers houden de balk in beeld zolang de focus erin zit */
 .header.is-hidden:focus-within {
@@ -93,6 +95,12 @@
   font-size: var(--text-s);
 }
 
+.header__burger {
+  transition: transform var(--motion-fast) var(--ease);
+}
+.header__burger:active {
+  transform: scale(0.95);
+}
 .header__burger {
   display: inline-grid;
   place-items: center;
