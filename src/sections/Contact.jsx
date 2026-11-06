@@ -7,6 +7,7 @@ import TopicChoice from '../components/ui/TopicChoice.jsx';
 import { brand } from '../content/site.js';
 import { gsap, duration } from '../lib/motion.js';
 import { useMotion } from '../hooks/useMotion.js';
+import { insertAanvraag, supabaseReady } from '../lib/supabase.js';
 import './Contact.css';
 
 const emailOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
@@ -44,23 +45,22 @@ export default function Contact() {
       return;
     }
 
-    if (!contact.endpoint) {
-      /* demo-modus: kort "verzenden" tonen zodat de knop zijn golf kan laten zien, er wordt niets verstuurd */
-      setStatus('sending');
-      await new Promise(r => setTimeout(r, 1600));
+    /* honeypot: een verborgen veld dat enkel bots invullen; dan doen we alsof alles lukte */
+    if (data.website) {
       setStatus('sent');
-      form.current.reset();
-      setTopic(contact.topics[0]);
       return;
     }
+
     setStatus('sending');
     try {
-      const res = await fetch(contact.endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+      // niet gekoppeld = eerlijk mislukken, nooit doen alsof het verstuurd is
+      if (!supabaseReady) throw new Error('niet gekoppeld');
+      await insertAanvraag({
+        naam: data.name.trim(),
+        email: data.email.trim(),
+        onderwerp: topic,
+        bericht: data.message.trim()
       });
-      if (!res.ok) throw new Error(String(res.status));
       setStatus('sent');
       form.current.reset();
       setTopic(contact.topics[0]);
@@ -124,15 +124,21 @@ export default function Contact() {
           <p className="contact__required label" aria-hidden="true">
             {contact.requiredNote}
           </p>
-          {field('name', f.name, { type: 'text', autoComplete: 'name', required: true })}
-          {field('email', f.email, { type: 'email', autoComplete: 'email', required: true, inputMode: 'email' })}
+          {field('name', f.name, { type: 'text', autoComplete: 'name', required: true, maxLength: 120 })}
+          {field('email', f.email, { type: 'email', autoComplete: 'email', required: true, inputMode: 'email', maxLength: 200 })}
 
           <fieldset className="topics">
             <legend className="field__label label">{f.topic}</legend>
             <TopicChoice name="topic" options={contact.topics} value={topic} onChange={setTopic} />
           </fieldset>
 
-          {field('message', f.message, { as: 'textarea', rows: 4, required: true })}
+          {field('message', f.message, { as: 'textarea', rows: 4, required: true, maxLength: 4000 })}
+
+          {/* voor bots: onzichtbaar en niet bereikbaar met toetsenbord of schermlezer */}
+          <div className="contact__hp" aria-hidden="true">
+            <label htmlFor="contact-website">Website</label>
+            <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+          </div>
 
           <div className="contact__submit">
             <Button
@@ -150,11 +156,11 @@ export default function Contact() {
           </div>
 
           <div className="contact__status" role="status" aria-live="polite">
-            {status === 'sent' && (
-              <p className="contact__sent">{contact.endpoint ? contact.success.live : contact.success.demo}</p>
-            )}
+            {status === 'sent' && <p className="contact__sent">{contact.sent}</p>}
             {status === 'failed' && (
-              <p className="contact__failed">Er ging iets mis bij het versturen. Probeer het zo nog eens.</p>
+              <p className="contact__failed">
+                {contact.failed} <a href={`mailto:${brand.email}`}>{brand.email}</a>.
+              </p>
             )}
           </div>
         </form>

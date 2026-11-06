@@ -74,7 +74,7 @@ export default function Hero() {
         </p>
 
         <h1 id="hero-title" className="hero__title">
-          <span className="sr-only">Mitsu: {brand.idea}</span>
+          <span className="sr-only">Mitsu</span>
           <span className="hero__word display" aria-hidden="true">
             {word.map((c, i) =>
               c === 'i' ? (
@@ -104,8 +104,8 @@ export default function Hero() {
             </Button>
           </div>
           <SplitText as="p" className="hero__tagline display" splitType="words" trigger="load" delay={1.4}>
-            {hero.tagline.before} <em>{hero.tagline.em}</em>
-            {hero.tagline.after}
+            {hero.offer.before} <em>{hero.offer.em}</em>
+            {hero.offer.after}
           </SplitText>
         </div>
       </div>

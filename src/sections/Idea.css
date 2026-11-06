@@ -155,3 +155,32 @@
     justify-self: end;
   }
 }
+
+/* donker thema: de kaarten lopen ook hier op van donker naar blauw (eerst wit, dan zwart op zwart) */
+:root[data-theme='dark'] .idea__panel--paper {
+  color-scheme: dark;
+  --color-bg: color-mix(in srgb, var(--ref-black) 84%, var(--ref-blue-300));
+  --color-text: var(--ref-white);
+  --color-text-muted: color-mix(in srgb, var(--ref-white) 76%, var(--ref-black));
+  --color-line: color-mix(in srgb, var(--ref-white) 18%, transparent);
+  --panel-dim: var(--ref-black);
+}
+:root[data-theme='dark'] .idea__panel--paper .idea__name {
+  color: var(--ref-blue-300);
+}
+:root[data-theme='dark'] .idea__panel--night {
+  color-scheme: dark;
+  --color-bg: var(--ref-blue-600);
+  --color-text: var(--ref-white);
+  --color-line: color-mix(in srgb, var(--ref-white) 24%, transparent);
+  --panel-dim: var(--ref-black);
+  border-color: transparent;
+}
+:root[data-theme='dark'] .idea__panel--night .idea__name {
+  color: var(--ref-white);
+}
+/* kaart 3 (blauw): tekst volledig wit, gedempt wit haalde maar 3,9:1 */
+.idea__panel--night .idea__text,
+.idea__panel--night .idea__meta {
+  color: var(--ref-white);
+}

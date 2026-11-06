@@ -1,0 +1,496 @@
+/* Adminpagina: rustig en functioneel, zelfde tokens als de site. */
+/* drie lagen: pagina, kolom, kaart. In donker thema elk een stap lichter, anders zie je de randen niet */
+:root {
+  --adm-page: var(--color-bg);
+  --adm-col: var(--color-bg-sunken);
+  --adm-card: var(--color-bg);
+}
+:root[data-theme='dark'] {
+  --adm-page: color-mix(in srgb, var(--ref-black) 94%, var(--ref-blue-300));
+  --adm-col: color-mix(in srgb, var(--ref-black) 85%, var(--ref-blue-300));
+  --adm-card: color-mix(in srgb, var(--ref-black) 76%, var(--ref-blue-300));
+  --color-text-muted: color-mix(in srgb, var(--ref-white) 84%, var(--ref-black));
+  --color-text-dim: color-mix(in srgb, var(--ref-white) 66%, var(--ref-black));
+  --color-line: color-mix(in srgb, var(--ref-white) 16%, transparent);
+}
+body {
+  background: var(--adm-page);
+}
+.admin {
+  display: grid;
+  gap: var(--space-6);
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-6) var(--gutter) var(--space-8);
+}
+.admin__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.admin__title {
+  font-size: var(--text-h3);
+}
+.admin__brand {
+  color: var(--color-text-dim);
+}
+.admin__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.admin__note {
+  color: var(--color-text-muted);
+}
+.admin__note code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+.admin__error {
+  color: var(--color-text);
+  font-weight: var(--weight-ui-strong);
+}
+
+/* ronde icoonknop (vernieuwen, sluiten): 44px raakvlak */
+.admin__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: var(--line-width) solid var(--color-line);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease);
+}
+.admin__icon:hover {
+  border-color: var(--color-text-dim);
+}
+.admin__icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.admin__icon.is-loading svg {
+  animation: admin-spin 0.8s linear infinite;
+}
+@keyframes admin-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- inloggen ---------- */
+.admin__login {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 24rem;
+}
+.admin__field {
+  display: grid;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+}
+.admin__field input {
+  min-height: var(--field-height);
+  padding: var(--space-3) 0;
+  border: 0;
+  border-bottom: var(--line-width) solid var(--color-text);
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-text);
+  font-size: var(--text-l);
+}
+.admin__field input:focus-visible {
+  border-bottom-color: var(--color-accent);
+}
+
+/* ---------- bord: drie kolommen; op gsm naast elkaar scrollen ---------- */
+.board {
+  display: grid;
+  grid-auto-flow: column;
+  /* bijna schermbreed, met een randje van de volgende kolom zichtbaar zodat je ziet dat je kan vegen */
+  grid-auto-columns: min(85vw, 26rem);
+  gap: var(--space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  /* de kaarten mogen tot aan de schermrand lopen */
+  margin-inline: calc(var(--gutter) * -1);
+  padding: 0 var(--gutter) var(--space-3);
+}
+@media (min-width: 900px) {
+  .board {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
+    margin-inline: 0;
+    padding: 0;
+  }
+}
+/* tijdens slepen niet terugspringen naar een kolom: het bord schuift zelf mee */
+.board.is-dragging {
+  scroll-snap-type: none;
+}
+.board__col {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  min-height: 12rem;
+  padding: var(--space-4);
+  border-radius: var(--radius-l);
+  background: var(--adm-col);
+  scroll-snap-align: start;
+  /* rand altijd aanwezig (transparant), zodat de drop-markering niets laat verspringen */
+  border: var(--line-width) dashed transparent;
+  transition: border-color var(--motion-fast) var(--ease), background-color var(--motion-fast) var(--ease);
+}
+.board__col.is-over {
+  border-color: var(--color-accent-text);
+}
+.board__head {
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-text-muted);
+}
+.board__count {
+  color: var(--color-text);
+}
+.board__empty {
+  color: var(--color-text-dim);
+  font-size: var(--text-s);
+}
+.board__list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- kaart ---------- */
+.card {
+  display: grid;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-4);
+  border: var(--line-width) solid var(--color-line);
+  border-radius: var(--radius-m);
+  background: var(--adm-card);
+  color: var(--color-text);
+  font: inherit;
+  text-align: left;
+  cursor: grab;
+  transition: transform var(--motion-fast) var(--ease), border-color var(--motion-fast) var(--ease);
+}
+.card:hover {
+  border-color: var(--color-text-dim);
+  transform: translateY(-2px);
+}
+/* lang indrukken op gsm start het slepen: geen tekstselectie of menu van de browser */
+.card {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+/* de kaart die je vasthebt: volledig zichtbaar, licht opgetild, volgt de pointer */
+.card--float {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-menu);
+  pointer-events: none;
+  cursor: grabbing;
+  border-color: var(--color-text-dim);
+  box-shadow: var(--shadow-lift);
+  will-change: transform;
+  /* geen overgang: anders loopt de kaart achter de muis aan */
+  transition: none;
+}
+/* de lege plek waar de kaart stond */
+.card-wrap.is-placeholder .card {
+  border-style: dashed;
+  border-color: var(--color-text-dim);
+  background: transparent;
+  transform: none;
+}
+.card-wrap.is-placeholder .card > *,
+.card-wrap.is-placeholder .card__trash {
+  visibility: hidden;
+}
+.board__col.is-over {
+  border-style: solid;
+  background: color-mix(in srgb, var(--adm-col) 80%, var(--ref-blue-300));
+}
+:root:not([data-theme='dark']) .board__col.is-over {
+  background: color-mix(in srgb, var(--adm-col) 70%, var(--ref-blue-300));
+}
+.card__top {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+.card__topic {
+  color: var(--color-accent-text);
+  font-weight: var(--weight-ui-strong);
+}
+.card__name {
+  font-weight: var(--weight-ui-strong);
+}
+.card__msg {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+  line-height: 1.45;
+}
+.card__note {
+  justify-self: start;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-s);
+  background: var(--adm-col);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+/* ---------- detail: paneel van rechts, op gsm schermvullend ---------- */
+.detail {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: min(36rem, 100%);
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-left: var(--line-width) solid var(--color-line);
+  background: var(--adm-col);
+  color: var(--color-text);
+  box-shadow: var(--shadow-lift);
+}
+.detail::backdrop {
+  background: var(--veil-ink);
+}
+.detail[open] {
+  animation: detail-in var(--motion-base) var(--ease);
+}
+@keyframes detail-in {
+  from {
+    transform: translateX(2rem);
+    opacity: 0;
+  }
+}
+.detail__inner {
+  display: grid;
+  align-content: start;
+  gap: var(--space-5);
+  min-height: 100%;
+  padding: var(--space-5) var(--gutter) var(--space-7);
+}
+.detail__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+}
+.detail__name {
+  font-size: var(--text-h3);
+}
+.detail__mail a {
+  color: var(--color-accent-text);
+  font-weight: var(--weight-ui-strong);
+  text-underline-offset: 0.2em;
+}
+
+/* status: drie tekstknoppen, de keuze krijgt een blauwe streep (zelfde taal als de keuze-opties op de site) */
+.detail__status {
+  display: flex;
+  gap: var(--space-5);
+  border-bottom: var(--line-width) solid var(--color-line);
+}
+.detail__status button {
+  min-height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-bottom: 0.25rem solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-weight: var(--weight-ui-strong);
+  cursor: pointer;
+}
+.detail__status button[aria-checked='true'] {
+  color: var(--color-text);
+  border-bottom-color: var(--color-accent);
+}
+
+.detail__block {
+  display: grid;
+  gap: var(--space-2);
+}
+.detail__label {
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-text-muted);
+}
+.detail__saved {
+  color: var(--color-text-dim);
+  text-transform: none;
+  letter-spacing: 0;
+}
+.detail__msg {
+  font-size: var(--text-l);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.detail__note {
+  width: 100%;
+  padding: var(--space-3);
+  border: var(--line-width) solid var(--color-line);
+  border-radius: var(--radius-s);
+  background: var(--adm-card);
+  color: var(--color-text);
+  font: inherit;
+  resize: vertical;
+}
+.detail .button {
+  justify-self: start;
+}
+
+/* ---------- verwijderen: prullenbak op de kaart en in het paneel ---------- */
+.card-wrap {
+  position: relative;
+}
+/* ruimte rechtsboven voor de prullenbak, zodat hij niet over de datum valt */
+.card__top {
+  padding-right: var(--space-6);
+}
+.card__trash {
+  position: absolute;
+  top: var(--space-1);
+  right: var(--space-1);
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--color-text-dim);
+  cursor: pointer;
+  transition: color var(--motion-fast) var(--ease), background-color var(--motion-fast) var(--ease);
+}
+.card__trash:hover {
+  color: var(--color-text);
+  background: var(--adm-col);
+}
+.card__trash svg,
+.admin__icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* ---------- verwijder-popup ---------- */
+.confirm {
+  width: min(26rem, calc(100% - 2 * var(--gutter)));
+  padding: 0;
+  border: var(--line-width) solid var(--color-line);
+  border-radius: var(--radius-l);
+  background: var(--adm-col);
+  color: var(--color-text);
+  box-shadow: var(--shadow-lift);
+}
+.confirm::backdrop {
+  background: var(--veil-ink);
+}
+.confirm[open] {
+  animation: confirm-in var(--motion-base) var(--ease);
+}
+@keyframes confirm-in {
+  from {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+}
+.confirm__inner {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-6);
+}
+.confirm__title {
+  font-size: var(--text-l);
+  font-weight: var(--weight-ui-strong);
+  line-height: 1.3;
+}
+.confirm__text {
+  color: var(--color-text-muted);
+}
+.confirm__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+.confirm__yes,
+.confirm__no {
+  min-height: 2.75rem;
+  padding: 0 var(--space-5);
+  border: var(--line-width) solid var(--color-line);
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  font-weight: var(--weight-ui-strong);
+  cursor: pointer;
+}
+.confirm__no:hover {
+  border-color: var(--color-text-dim);
+}
+/* de wisknop: vol vlak in de tekstkleur, duidelijk de 'zware' keuze */
+.confirm__yes {
+  border-color: var(--color-text);
+  background: var(--color-text);
+  color: var(--adm-col);
+}
+.detail__bar > p {
+  min-width: 0;
+}
+.detail__tools {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin__icon.is-loading svg,
+  .confirm[open],
+  .detail[open] {
+    animation: none;
+  }
+  .card,
+  .card:hover {
+    transition: none;
+    transform: none;
+  }
+}
