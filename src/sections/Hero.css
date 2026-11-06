@@ -181,6 +181,13 @@
 }
 
 @media (max-width: 899px) {
+  /* op gsm iets minder lucht onder de hero, anders lijkt de pagina daar te stoppen */
+  .hero {
+    min-height: 96svh;
+  }
+  .hero__inner {
+    padding-bottom: calc(var(--space-7) + var(--space-3));
+  }
   .hero {
     --figure-h: clamp(12rem, 34svh, 22rem);
     /* diepere lucht onder de wordmark, zodat alle tekst eronder AA-contrast haalt */

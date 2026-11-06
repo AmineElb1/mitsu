@@ -57,8 +57,8 @@ export const brand = {
   email: 'mitsu.site@outlook.com',
   /* sociale kanalen: naam zoals getoond + link */
   socials: [
-    { id: 'instagram', label: 'Instagram', handle: 'mitsu.site', href: 'https://www.instagram.com/mitsu.site/' },
-    { id: 'tiktok', label: 'TikTok', handle: 'mitsu.site', href: 'https://www.tiktok.com/@mitsu.site' }
+    { id: 'instagram', label: 'Instagram', handle: '@mitsu.site', href: 'https://www.instagram.com/mitsu.site/' },
+    { id: 'tiktok', label: 'TikTok', handle: '@mitsu.site', href: 'https://www.tiktok.com/@mitsu.site' }
   ]
 };
 

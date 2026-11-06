@@ -27,7 +27,7 @@ export default function Idea() {
        zodat de eerste letter altijd zichtbaar blijft */
     gsap.fromTo(
       q('.idea__ghost'),
-      { xPercent: 22 },
+      { xPercent: 12 },
       {
         xPercent: 0,
         ease: 'none',
