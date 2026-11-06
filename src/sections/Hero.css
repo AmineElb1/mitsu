@@ -147,10 +147,11 @@
   align-items: end;
 }
 .hero__lead {
-  max-width: 20rem;
-  font-size: var(--text-s);
+  max-width: 22rem;
+  font-size: var(--text-m);
   line-height: 1.5;
-  color: var(--color-on-ink-muted);
+  /* wit: het vroegere gedimde wit haalde op desktop maar 3,8:1 op de lucht */
+  color: var(--color-text);
 }
 .hero__cta {
   display: flex;
@@ -212,5 +213,13 @@
   }
   .hero__title {
     margin-block: 0;
+  }
+}
+
+/* gsm: eerst wat we doen, dan de uitleg en de knoppen (op desktop blijft de zin rechtsonder) */
+@media (max-width: 899px) {
+  .hero__tagline {
+    order: -1;
+    max-width: none;
   }
 }

@@ -79,8 +79,9 @@ export const cta = {
    Hero
    --------------------------------------------------------------------------- */
 export const hero = {
-  tagline: { before: 'Drie punten, één', em: 'licht', after: '.' },
-  lead: 'Bij Mitsu bouwen we websites die je zaak een heldere kern geven. Strak ontworpen en makkelijk te beheren.',
+  /* wat we doen, in één zin: het eerste dat een bezoeker moet kunnen lezen */
+  offer: { before: 'Websites voor', em: 'lokale zaken', after: '.' },
+  lead: 'Een site die klopt op elk scherm, met online bestellen en afhalen. Wij ontwerpen, bouwen en onderhouden hem.',
   /* Naam van een foto uit `photos` voor een fotoachtergrond; leeg = alleen de blauwe lucht. */
   image: ''
 };
@@ -92,7 +93,8 @@ export const manifest = {
   label: 'Wie we zijn',
   title: { strong: 'Drie makers,', em: 'één', strongAfter: 'doel:' },
   ghost: 'een website die bij je zaak past.',
-  intro: 'Je krijgt één aanspreekpunt, een duidelijke prijs en een site die op elk scherm goed werkt. Wij doen het ontwerp, de bouw en het onderhoud.',
+  /* geen beloftes die we niet altijd waarmaken: zie PRODUCT.md */
+  intro: 'Je praat rechtstreeks met de makers, zonder tussenpersoon. De prijs leggen we samen vast zodra duidelijk is wat we bouwen, en daar blijft het bij. Wij doen het ontwerp, de bouw en het onderhoud.',
   highlight: 'Zodat jij kan focussen op je zaak, terwijl je website klanten binnenbrengt.',
 };
 
@@ -269,8 +271,6 @@ export const contact = {
   label: 'Contact',
   title: { before: 'Laten we', em: 'praten', after: '.' },
   text: 'Vertel kort waar je mee bezig bent. We lezen elk bericht zelf en sturen je snel een eerlijk antwoord.',
-  /* Laat leeg voor demo-modus. Vul een URL in om het formulier echt te versturen (POST, JSON). */
-  endpoint: '',
   topics: ['Website', 'Bestellen', 'Onderhoud', 'Iets anders'],
   fields: {
     name: 'Naam',
@@ -281,10 +281,9 @@ export const contact = {
   submit: 'Stuur je aanvraag',
   requiredNote: 'Velden met * zijn verplicht',
   privacy: 'We gebruiken je gegevens alleen om te antwoorden.',
-  success: {
-    live: 'Bedankt, je bericht is verstuurd. We komen er snel op terug.',
-    demo: 'Bedankt! Dit is een voorbeeldformulier: er is niets verstuurd. Koppel je eigen endpoint in src/content/site.js.'
-  },
+  sent: 'Bedankt, je aanvraag is goed aangekomen. We nemen ze grondig door en antwoorden je per mail.',
+  /* de mail staat erbij, zodat niemand vastzit als het versturen mislukt */
+  failed: 'Versturen lukte niet. Probeer het zo opnieuw, of mail ons op',
   errors: {
     name: 'Vul je naam in.',
     email: 'Vul een geldig e-mailadres in.',

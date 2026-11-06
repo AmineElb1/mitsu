@@ -36,7 +36,8 @@
   font-weight: var(--weight-ui-strong);
   line-height: 1.2;
   white-space: nowrap;
-  color: color-mix(in srgb, var(--color-text) 45%, transparent);
+  /* 62%: leesbaar (45% haalde maar 3,2:1); de streep toont welke gekozen is */
+  color: color-mix(in srgb, var(--color-text) 62%, transparent);
   transition: color var(--motion-base) var(--ease);
 }
 .topic-choice__opt:hover .topic-choice__text {

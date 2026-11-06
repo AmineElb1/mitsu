@@ -112,12 +112,31 @@ textarea.field__control {
     0 calc(var(--focus-width) + var(--focus-edge)) 0 0 var(--color-focus-edge);
 }
 .field.has-error .field__control {
-  border-bottom-color: var(--color-accent);
+  border-bottom-color: var(--color-accent-text);
 }
-.field__error {
-  color: var(--color-accent);
+/* fouten lees je, ook zonder kleur: tekstkleur plus een rond uitroepteken (lichtblauw haalde maar 1,8:1) */
+.field__error,
+.contact__failed {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  color: var(--color-text);
   font-size: var(--text-s);
   font-weight: var(--weight-ui-strong);
+}
+.field__error::before,
+.contact__failed::before {
+  content: '!';
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 1.25em;
+  height: 1.25em;
+  border-radius: 50%;
+  background: var(--color-accent-text);
+  color: var(--color-bg);
+  font-size: 0.85em;
+  line-height: 1;
 }
 
 .topics {
@@ -156,8 +175,25 @@ textarea.field__control {
   font-weight: var(--weight-ui-strong);
 }
 .contact__failed {
-  color: var(--color-accent);
-  font-weight: var(--weight-ui-strong);
+  display: block;
+  font-size: var(--text-m);
+}
+.contact__failed::before {
+  display: inline-grid;
+  margin-right: var(--space-2);
+  vertical-align: 0.1em;
+}
+.contact__failed a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+/* honeypot: buiten beeld, niet display:none (sommige bots slaan verborgen velden over) */
+.contact__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 @media (min-width: 900px) {
