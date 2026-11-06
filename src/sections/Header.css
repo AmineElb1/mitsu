@@ -34,6 +34,14 @@
   backdrop-filter: blur(var(--space-5)) saturate(1.4);
   pointer-events: auto;
 }
+/* gsm: de balk staat vast en wordt bij elk scrollframe opnieuw vervaagd.
+   Een kleinere blur zonder saturate kost veel minder en oogt bijna hetzelfde. */
+@media (max-width: 899px) {
+  .header__bar {
+    -webkit-backdrop-filter: blur(var(--space-2));
+    backdrop-filter: blur(var(--space-2));
+  }
+}
 
 .header__logo {
   display: inline-flex;

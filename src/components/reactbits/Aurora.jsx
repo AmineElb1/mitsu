@@ -237,6 +237,8 @@ const Aurora = ({
   lightMode = false,
   paused = false,
   dpr,
+  maxFps,
+  pauseOnScroll = false,
   className = '',
   style
 }) => {
@@ -261,7 +263,9 @@ const Aurora = ({
     opacity: clamp(opacity, 0, 1),
     lightMode,
     paused,
-    dpr
+    dpr,
+    maxFps,
+    pauseOnScroll
   };
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
@@ -308,6 +312,7 @@ const Aurora = ({
       return rgb;
     };
     const palette = new Float32Array(MAX_STOPS * 3);
+    let paletteKey = '';
 
     const view = { width: 1, height: 1 };
     const pointer = { x: 0, y: 0, inside: false };
@@ -321,10 +326,17 @@ const Aurora = ({
     let raf = 0;
     let last = 0;
     let visible = true;
+    let quietAt = 0; // tijdstip waarop het scrollen gestopt is
+    let quietTimer = 0;
 
     const render = () => {
       const s = settingsRef.current;
-      unwrapHues(s.stops.map(value => toOklch(parse(value)))).forEach((stop, index) => palette.set(stop, index * 3));
+      // kleuromzetting enkel als de kleuren veranderen, niet elk frame (scheelt CPU tijdens scrollen)
+      const key = s.stops.join('|');
+      if (key !== paletteKey) {
+        unwrapHues(s.stops.map(value => toOklch(parse(value)))).forEach((stop, index) => palette.set(stop, index * 3));
+        paletteKey = key;
+      }
       const reveal = state.reveal;
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.useProgram(program.program);
@@ -352,6 +364,19 @@ const Aurora = ({
       raf = 0;
       if (!visible || document.hidden) return;
       const s = settingsRef.current;
+      // tijdens scrollen niet tekenen: de shader en het scrollen vechten op gsm om dezelfde frames.
+      // Het canvas houdt zijn laatste beeld; na het scrollen loopt het licht gewoon verder.
+      if (s.pauseOnScroll && now < quietAt) {
+        last = 0;
+        clearTimeout(quietTimer);
+        quietTimer = setTimeout(wake, quietAt - now + 16);
+        return;
+      }
+      // optionele framelimiet: het licht beweegt traag, 30 fps is niet te zien maar halveert het werk
+      if (s.maxFps && last && now - last < 1000 / s.maxFps - 2) {
+        raf = requestAnimationFrame(frame);
+        return;
+      }
       const dt = last ? clamp((now - last) / 1000, 0.0005, 0.05) : 1 / 60;
       last = now;
       if (s.paused) {
@@ -416,6 +441,10 @@ const Aurora = ({
       pointer.inside = false;
     };
 
+    const onScroll = () => {
+      quietAt = performance.now() + 180;
+    };
+
     const onVisibility = () => {
       last = 0;
       wake();
@@ -437,6 +466,7 @@ const Aurora = ({
     window.addEventListener('pointercancel', onPointerUp, { passive: true });
     document.documentElement.addEventListener('pointerleave', onPointerLeave);
     document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener('scroll', onScroll, { passive: true });
     resize();
 
     let lastDpr = settingsRef.current.dpr;
@@ -453,6 +483,7 @@ const Aurora = ({
 
     return () => {
       cancelAnimationFrame(raf);
+      clearTimeout(quietTimer);
       wakeRef.current = null;
       resizeObserver.disconnect();
       intersection.disconnect();
@@ -462,6 +493,7 @@ const Aurora = ({
       window.removeEventListener('pointercancel', onPointerUp);
       document.documentElement.removeEventListener('pointerleave', onPointerLeave);
       document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('scroll', onScroll);
       gl.deleteProgram(program.program);
       gl.deleteBuffer(buffer);
       gl.deleteVertexArray(vao);

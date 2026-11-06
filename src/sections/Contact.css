@@ -63,6 +63,13 @@
   -webkit-backdrop-filter: blur(var(--space-5)) saturate(1.2);
   backdrop-filter: blur(var(--space-5)) saturate(1.2);
 }
+/* gsm: zelfde reden als de header, lichtere blur zodat scrollen over het formulier vloeiend blijft */
+@media (max-width: 899px) {
+  .contact__card {
+    -webkit-backdrop-filter: blur(var(--space-2));
+    backdrop-filter: blur(var(--space-2));
+  }
+}
 
 .field {
   display: grid;

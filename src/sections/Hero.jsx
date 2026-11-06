@@ -5,8 +5,7 @@ import Button from '../components/ui/Button.jsx';
 import Glow from '../components/ui/Glow.jsx';
 import LightFigure from '../components/ui/LightFigure.jsx';
 import SplitText from '../components/reactbits/SplitText.jsx';
-import { gsap, duration } from '../lib/motion.js';
-import { tokenValue } from '../lib/tokens.js';
+import { gsap, duration, ScrollTrigger } from '../lib/motion.js';
 import { useMotion } from '../hooks/useMotion.js';
 import './Hero.css';
 
@@ -23,22 +22,28 @@ export default function Hero() {
       gsap.set(q('[data-hero-fade]'), { opacity: 1 });
       return undefined;
     }
-    const blur = tokenValue('--blur-reveal');
-
-    /* Intro: wordmark wordt scherp, de drie wazige figuren verschijnen erachter, rest fade in */
+    /* Intro: wordmark rijst op en wordt zichtbaar, de drie wazige figuren verschijnen erachter, rest fade in.
+       Geen blur op de letters: een filter animeren op zulke grote tekst kost op gsm te veel frames. */
     const tl = gsap.timeline({ delay: 0.15 });
     tl.from(
       q('.hero__word-char'),
-      { opacity: 0, yPercent: 24, filter: `blur(${blur})`, duration: duration.slow * 1.8, stagger: 0.1 },
+      { opacity: 0, yPercent: 24, scale: 0.96, transformOrigin: '50% 100%', duration: duration.slow * 1.8, stagger: 0.1 },
       0.3
     )
       .from(q('.hero__person .figure'), { opacity: 0, yPercent: 12, duration: duration.slow * 2.2, stagger: 0.2 }, 0.8)
       .from(q('[data-hero-fade]'), { opacity: 0, y: '1.5em', duration: duration.slow, stagger: 0.12 }, 1.2);
 
     /* de figuren blijven wazig en ademen zacht (ze worden nooit scherp) */
-    q('.hero__person .figure').forEach((el, i) =>
+    const breathe = q('.hero__person .figure').map((el, i) =>
       gsap.to(el, { yPercent: -2.5, duration: duration.slow * 5 + i, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: i * 0.5 })
     );
+    // buiten beeld stilzetten: anders blijven drie wazige lagen elk frame bewegen terwijl je verder scrolt
+    ScrollTrigger.create({
+      trigger: root.current,
+      start: 'top bottom',
+      end: 'bottom top',
+      onToggle: self => breathe.forEach(t => (self.isActive ? t.resume() : t.pause()))
+    });
 
     /* parallax bij het wegscrollen: de titel trekt sneller weg dan de figuren erachter */
     const scrub = { trigger: root.current, start: 'top top', end: 'bottom top', scrub: true };
