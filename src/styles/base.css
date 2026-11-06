@@ -227,3 +227,20 @@ em.display-em {
   color: var(--color-text-dim);
   font-weight: var(--weight-display);
 }
+
+/* Grotere tikvlakken voor kleine links, zonder de opmaak te veranderen:
+   een onzichtbare laag rond de link vangt ook een duim die net naast tikt (doel ±44px hoog). */
+.footer__link,
+.menu__socials a,
+.contact__mail a,
+.header__logo {
+  position: relative;
+}
+.footer__link::after,
+.menu__socials a::after,
+.contact__mail a::after,
+.header__logo::after {
+  content: '';
+  position: absolute;
+  inset: -0.6rem -0.3rem;
+}

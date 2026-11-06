@@ -138,3 +138,10 @@
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* op gsm: minder lege ruimte onder het project */
+@media (max-width: 899px) {
+  .work {
+    padding-bottom: var(--space-7);
+  }
+}

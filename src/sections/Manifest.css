@@ -42,3 +42,10 @@
     gap: var(--space-8);
   }
 }
+
+/* op gsm iets minder lege ruimte boven de sectie */
+@media (max-width: 899px) {
+  .manifest {
+    padding-top: calc((var(--space-7) + var(--space-8)) / 2);
+  }
+}

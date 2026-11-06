@@ -68,3 +68,14 @@
 .client.is-inverted {
   filter: brightness(0);
 }
+
+/* op gsm: minder lege ruimte boven de titel en onder de logo-rij */
+@media (max-width: 899px) {
+  .clients {
+    padding-top: calc((var(--space-7) + var(--space-8)) / 2);
+  }
+  .clients__band {
+    min-height: 32svh;
+    padding-top: calc((var(--space-6) + var(--space-7)) / 2);
+  }
+}

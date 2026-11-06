@@ -160,3 +160,9 @@ textarea.field__control {
   }
 }
 
+/* op gsm iets minder lege ruimte boven de sectie */
+@media (max-width: 899px) {
+  .contact {
+    padding-top: calc((var(--space-7) + var(--space-8)) / 2);
+  }
+}
