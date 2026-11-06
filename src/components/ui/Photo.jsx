@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import { gsap, duration } from '../../lib/motion.js';
-import { tokenValue } from '../../lib/tokens.js';
 import { useMotion } from '../../hooks/useMotion.js';
 import { imageConfig, photos } from '../../content/site.js';
 import './Photo.css';
@@ -39,16 +38,15 @@ export default function Photo({
     if (!img || !full) return undefined;
 
     if (reveal) {
-      // bij duotone staat het grijs in CSS; houd het tijdens de blur vast zodat er niets flitst
-      const base = tone === 'duotone' ? 'grayscale(1) contrast(1.1) ' : '';
+      // fade + lichte zoom in plaats van blur: een filter animeren op een grote foto hapert tijdens scrollen
       gsap.fromTo(
         img,
-        { filter: `${base}blur(${tokenValue('--blur-reveal')})`, scale: 1.08 },
+        { opacity: 0, scale: 1.08 },
         {
-          filter: `${base}blur(0rem)`,
+          opacity: 1,
           scale: 1,
           duration: duration.slow * 2,
-          clearProps: 'filter',
+          clearProps: 'opacity',
           scrollTrigger: { trigger: ref.current, start: 'top 92%', once: true }
         }
       );
