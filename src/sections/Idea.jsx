@@ -14,14 +14,31 @@ export default function Idea() {
     const q = gsap.utils.selector(root);
     const cards = q('.idea__card');
 
-    /* overlappende vlakken: elk paneel schuift onder het volgende en wordt kleiner */
-    cards.slice(0, -1).forEach((card, i) => {
-      const st = { trigger: cards[i + 1], start: 'top 85%', end: 'top 18%', scrub: true };
-      gsap.to(q('.idea__panel')[i], { scale: 0.92, ease: 'none', scrollTrigger: st });
-      /* schaduw als echt element met vaste begin- en eindwaarde: Safari werkte een ::after met een
-         CSS-variabele niet altijd bij, waardoor kaarten bij de eerste keer laden donker bleven */
-      gsap.fromTo(q('.idea__shade')[i], { opacity: 0 }, { opacity: 0.62, ease: 'none', scrollTrigger: st });
+    /* overlappende vlakken: elk paneel schuift onder het volgende, wordt kleiner en donkerder.
+       We rekenen dat elke frame uit de echte positie van de volgende kaart, in plaats van met
+       ScrollTrigger-posities die bij het laden worden opgemeten: op iOS werden die soms opgemeten
+       terwijl de sticky kaarten vastzaten, waardoor kaart 1 en 2 donker bleven tot een refresh. */
+    const panels = q('.idea__panel');
+    const shades = q('.idea__shade');
+    const update = () => {
+      const vh = window.innerHeight;
+      // eerst alles lezen, dan alles schrijven: geen gedwongen herberekening van de layout
+      const tops = cards.slice(1).map(card => card.getBoundingClientRect().top);
+      tops.forEach((top, i) => {
+        const p = gsap.utils.clamp(0, 1, (vh * 0.85 - top) / (vh * 0.67));
+        gsap.set(panels[i], { scale: 1 - 0.08 * p });
+        gsap.set(shades[i], { opacity: 0.62 * p });
+      });
+    };
+    update();
+    // enkel elke frame rekenen terwijl de sectie in beeld is; de browser meldt dat zelf, zonder opgemeten posities
+    const io = new IntersectionObserver(([entry]) => {
+      update();
+      if (entry.isIntersecting) gsap.ticker.add(update);
+      else gsap.ticker.remove(update);
     });
+    io.observe(root.current);
+
     /* de grote spookwoorden drijven langzaam tegen de scroll in; ze eindigen links op de rand van de pagina,
        zodat de eerste letter altijd zichtbaar blijft */
     gsap.fromTo(
@@ -33,7 +50,12 @@ export default function Idea() {
         scrollTrigger: { trigger: root.current, start: 'top bottom', end: 'bottom top', scrub: true }
       }
     );
-    return undefined;
+    return () => {
+      io.disconnect();
+      gsap.ticker.remove(update);
+      gsap.set(panels, { clearProps: 'transform' });
+      gsap.set(shades, { clearProps: 'opacity' });
+    };
   });
 
   return (
