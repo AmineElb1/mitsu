@@ -16,12 +16,11 @@ export default function Idea() {
 
     /* overlappende vlakken: elk paneel schuift onder het volgende en wordt kleiner */
     cards.slice(0, -1).forEach((card, i) => {
-      gsap.to(q('.idea__panel')[i], {
-        scale: 0.92,
-        '--dim': 0.62,
-        ease: 'none',
-        scrollTrigger: { trigger: cards[i + 1], start: 'top 85%', end: 'top 18%', scrub: true }
-      });
+      const st = { trigger: cards[i + 1], start: 'top 85%', end: 'top 18%', scrub: true };
+      gsap.to(q('.idea__panel')[i], { scale: 0.92, ease: 'none', scrollTrigger: st });
+      /* schaduw als echt element met vaste begin- en eindwaarde: Safari werkte een ::after met een
+         CSS-variabele niet altijd bij, waardoor kaarten bij de eerste keer laden donker bleven */
+      gsap.fromTo(q('.idea__shade')[i], { opacity: 0 }, { opacity: 0.62, ease: 'none', scrollTrigger: st });
     });
     /* de grote spookwoorden drijven langzaam tegen de scroll in; ze eindigen links op de rand van de pagina,
        zodat de eerste letter altijd zichtbaar blijft */
@@ -61,6 +60,7 @@ export default function Idea() {
                 </div>
                 <h3 className="idea__name display">{p.name}</h3>
                 <p className="idea__text">{p.text}</p>
+                <span className="idea__shade" aria-hidden="true" />
               </article>
             </li>
           ))}
