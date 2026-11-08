@@ -83,12 +83,11 @@
   overflow: hidden;
 }
 /* schaduw die het onderliggende paneel donkerder maakt zodra het volgende erover schuift */
-.idea__panel::after {
-  content: '';
+.idea__shade {
   position: absolute;
   inset: 0;
   background: var(--panel-dim, var(--ref-black));
-  opacity: var(--dim, 0);
+  opacity: 0;
   pointer-events: none;
 }
 
